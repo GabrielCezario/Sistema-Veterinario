@@ -13,6 +13,8 @@ public class Cliente {
 	private String senha;
 	private int rg;
 	private int cpf;
+	
+	//testando
 
 	public Cliente() {
 		
