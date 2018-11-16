@@ -8,6 +8,9 @@ public class Veterinario {
 	private String telefone;
 	private String endereco;
 	private String sexo;
+	private String email;
+	private String login;
+	private String senha;
 	private String especialidade;
 	private int rg;
 	private int cpf;
@@ -18,7 +21,7 @@ public class Veterinario {
 		
 	}
 	
-	public Veterinario(String nome, String dtNascimento, String telefone, String endereco, String sexo, String especialidade, int rg, int cpf) {
+	public Veterinario(String nome, String dtNascimento, String telefone, String endereco, String sexo, String email, String login, String senha, String especialidade, int rg, int cpf) {
 		
 		idMedico++;
 		
@@ -31,6 +34,10 @@ public class Veterinario {
 		this.rg = rg;
 		this.cpf = cpf;
 		
+	}
+
+	public static int getIdMedico() {
+		return idMedico;
 	}
 
 	public String getNome() {
@@ -71,6 +78,30 @@ public class Veterinario {
 
 	public void setSexo(String sexo) {
 		this.sexo = sexo;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getLogin() {
+		return login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 	public String getEspecialidade() {

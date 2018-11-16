@@ -8,6 +8,9 @@ public class Cliente {
 	private String telefone;
 	private String endereco;
 	private String sexo;
+	private String email;
+	private String login;
+	private String senha;
 	private int rg;
 	private int cpf;
 
@@ -17,7 +20,7 @@ public class Cliente {
 		
 	}
 
-	public Cliente(String nome, String dtNascimento, String telefone, String endereco, String sexo, int rg, int cpf) {
+	public Cliente(String nome, String dtNascimento, String telefone, String endereco, String sexo, String email, String login, String senha, int rg, int cpf) {
 		
 		idCliente++;
 		
@@ -26,9 +29,18 @@ public class Cliente {
 		this.telefone = telefone;
 		this.endereco = endereco;
 		this.sexo = sexo;
+		this.email = email;
+		this.login = login;
+		this.senha = senha;
 		this.rg = rg;
 		this.cpf = cpf;
 		
+	}
+	
+	
+
+	public static int getIdCliente() {
+		return idCliente;
 	}
 
 	public String getNome() {
@@ -71,6 +83,30 @@ public class Cliente {
 		this.sexo = sexo;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getLogin() {
+		return login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
 	public int getRg() {
 		return rg;
 	}
@@ -85,6 +121,6 @@ public class Cliente {
 
 	public void setCpf(int cpf) {
 		this.cpf = cpf;
-	}
+	}	
 
 }
