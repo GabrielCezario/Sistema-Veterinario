@@ -10,6 +10,8 @@ public class Cliente {
 	private String sexo;
 	private int rg;
 	private int cpf;
+	
+	//testando
 
 	public Cliente() {
 		
