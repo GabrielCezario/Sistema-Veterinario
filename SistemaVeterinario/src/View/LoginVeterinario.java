@@ -13,6 +13,9 @@ import javax.swing.JScrollPane;
 import java.awt.SystemColor;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
+import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.awt.event.ActionEvent;
 
 public class LoginVeterinario extends JPanel {
 	private JTextField txtLogin;
@@ -38,6 +41,8 @@ public class LoginVeterinario extends JPanel {
 		panelErroLogin.setBackground(Color.RED);
 		panelErroLogin.setBounds(0, 33, 640, 34);
 		add(panelErroLogin);
+		
+		panelErroLogin.setVisible(false);
 		
 		JLabel lblLoginOuSenha = new JLabel("Login ou Senha est\u00E3o incorretos!");
 		lblLoginOuSenha.setForeground(Color.WHITE);
@@ -65,14 +70,6 @@ public class LoginVeterinario extends JPanel {
 		pswSenha.setBounds(234, 272, 227, 20);
 		add(pswSenha);
 		
-		JButton btnVoltar = new JButton("Voltar");
-		btnVoltar.setBounds(10, 446, 89, 23);
-		add(btnVoltar);
-		
-		JButton btnEntrar = new JButton("Entrar");
-		btnEntrar.setBounds(293, 303, 103, 23);
-		add(btnEntrar);
-		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.RED);
 		panel.setBounds(246, 78, 150, 150);
@@ -83,6 +80,34 @@ public class LoginVeterinario extends JPanel {
 		lblfotoAqui.setForeground(Color.WHITE);
 		lblfotoAqui.setBackground(Color.WHITE);
 		panel.add(lblfotoAqui);
+		
+		JButton btnVoltar = new JButton("Voltar");
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				Main.getFrame().setContentPane(new Inicio());
+				Main.getFrame().getContentPane().revalidate();
+				
+			}
+		});
+		btnVoltar.setBounds(10, 446, 89, 23);
+		add(btnVoltar);
+		
+		JButton btnEntrar = new JButton("Entrar");
+		btnEntrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					Main.getFrame().setContentPane(new PerfilVeterinario());
+					Main.getFrame().getContentPane().revalidate();
+				} catch (ParseException e1) {
+					e1.printStackTrace();
+				}
+				
+			}
+		});
+		btnEntrar.setBounds(293, 303, 103, 23);
+		add(btnEntrar);
 
 	}
 }

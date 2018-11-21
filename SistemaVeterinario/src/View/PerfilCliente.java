@@ -10,9 +10,16 @@ import java.awt.Font;
 import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
+import javax.swing.text.MaskFormatter;
 import javax.swing.JFormattedTextField;
 import javax.swing.JEditorPane;
 import javax.swing.JComboBox;
+import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.awt.event.ActionEvent;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class PerfilCliente extends JPanel {
 	private JTextField txtNome;
@@ -20,14 +27,21 @@ public class PerfilCliente extends JPanel {
 	private JTextField txtEmail;
 	private JTextField txtNomeUsuario;
 	private JTextField txtSenha;
+	private JTable tblHistorico;
 
-	/**
-	 * Create the panel.
-	 */
-	public PerfilCliente() {
+
+	public PerfilCliente() throws ParseException {
 		setLayout(null);
 		
 		JButton btnVoltar = new JButton("Voltar");
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				Main.getFrame().setContentPane(new LoginCliente());
+				Main.getFrame().getContentPane().revalidate();
+				
+			}
+		});
 		btnVoltar.setBounds(10, 446, 89, 23);
 		add(btnVoltar);
 		
@@ -60,6 +74,8 @@ public class PerfilCliente extends JPanel {
 		txtNome.setBounds(118, 11, 512, 20);
 		panelDados.add(txtNome);
 		
+		txtNome.setEditable(false);
+		
 		JLabel label_1 = new JLabel("Telefone");
 		label_1.setHorizontalAlignment(SwingConstants.LEFT);
 		label_1.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -70,6 +86,11 @@ public class PerfilCliente extends JPanel {
 		formattedTextFieldTelefone.setToolTipText("");
 		formattedTextFieldTelefone.setBounds(71, 36, 140, 23);
 		panelDados.add(formattedTextFieldTelefone);
+		
+		MaskFormatter maskTelefone = new MaskFormatter("(##)#####-####");
+		maskTelefone.install(formattedTextFieldTelefone);
+		
+		formattedTextFieldTelefone.setEditable(false);
 		
 		JLabel label_2 = new JLabel("Data de Nascimento");
 		label_2.setHorizontalAlignment(SwingConstants.LEFT);
@@ -82,6 +103,11 @@ public class PerfilCliente extends JPanel {
 		formattedTextFieldDtNascimento.setBounds(350, 35, 118, 23);
 		panelDados.add(formattedTextFieldDtNascimento);
 		
+		MaskFormatter maskDtNascimento = new MaskFormatter("##/##/####");
+		maskDtNascimento.install(formattedTextFieldDtNascimento);
+		
+		formattedTextFieldDtNascimento.setEditable(false);
+		
 		JLabel label_3 = new JLabel("Sexo");
 		label_3.setHorizontalAlignment(SwingConstants.LEFT);
 		label_3.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -93,10 +119,7 @@ public class PerfilCliente extends JPanel {
 		txtSexo.setBounds(518, 36, 112, 20);
 		panelDados.add(txtSexo);
 		
-		JFormattedTextField formattedTextFieldRG = new JFormattedTextField();
-		formattedTextFieldRG.setToolTipText("");
-		formattedTextFieldRG.setBounds(518, 61, 112, 23);
-		panelDados.add(formattedTextFieldRG);
+		txtSexo.setEditable(false);
 		
 		JLabel label_4 = new JLabel("RG");
 		label_4.setHorizontalAlignment(SwingConstants.LEFT);
@@ -104,10 +127,15 @@ public class PerfilCliente extends JPanel {
 		label_4.setBounds(478, 63, 19, 14);
 		panelDados.add(label_4);
 		
-		JFormattedTextField formattedTextField_CPF = new JFormattedTextField();
-		formattedTextField_CPF.setToolTipText("");
-		formattedTextField_CPF.setBounds(350, 61, 118, 23);
-		panelDados.add(formattedTextField_CPF);
+		JFormattedTextField formattedTextFieldRG = new JFormattedTextField();
+		formattedTextFieldRG.setToolTipText("");
+		formattedTextFieldRG.setBounds(518, 61, 112, 23);
+		panelDados.add(formattedTextFieldRG);
+		
+		MaskFormatter maskRG = new MaskFormatter("#.###.###");
+		maskRG.install(formattedTextFieldRG);
+		
+		formattedTextFieldRG.setEditable(false);
 		
 		JLabel label_5 = new JLabel("CPF");
 		label_5.setHorizontalAlignment(SwingConstants.LEFT);
@@ -115,16 +143,28 @@ public class PerfilCliente extends JPanel {
 		label_5.setBounds(314, 63, 26, 14);
 		panelDados.add(label_5);
 		
-		txtEmail = new JTextField();
-		txtEmail.setColumns(10);
-		txtEmail.setBounds(54, 61, 250, 20);
-		panelDados.add(txtEmail);
+		JFormattedTextField formattedTextField_CPF = new JFormattedTextField();
+		formattedTextField_CPF.setToolTipText("");
+		formattedTextField_CPF.setBounds(350, 61, 118, 23);
+		panelDados.add(formattedTextField_CPF);
+		
+		MaskFormatter maskCPF = new MaskFormatter("###.###.###-##");
+		maskCPF.install(formattedTextField_CPF);
+		
+		formattedTextField_CPF.setEditable(false);
 		
 		JLabel label_6 = new JLabel("Email");
 		label_6.setHorizontalAlignment(SwingConstants.LEFT);
 		label_6.setFont(new Font("Arial", Font.PLAIN, 13));
 		label_6.setBounds(10, 63, 44, 14);
 		panelDados.add(label_6);
+		
+		txtEmail = new JTextField();
+		txtEmail.setColumns(10);
+		txtEmail.setBounds(54, 61, 250, 20);
+		panelDados.add(txtEmail);
+		
+		txtEmail.setEditable(false);
 		
 		JLabel label_7 = new JLabel("Nome de Usu\u00E1rio");
 		label_7.setHorizontalAlignment(SwingConstants.LEFT);
@@ -137,6 +177,8 @@ public class PerfilCliente extends JPanel {
 		txtNomeUsuario.setBounds(123, 88, 207, 20);
 		panelDados.add(txtNomeUsuario);
 		
+		txtNomeUsuario.setEditable(false);
+		
 		JLabel label_8 = new JLabel("Senha");
 		label_8.setHorizontalAlignment(SwingConstants.LEFT);
 		label_8.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -148,6 +190,8 @@ public class PerfilCliente extends JPanel {
 		txtSenha.setBounds(384, 88, 246, 20);
 		panelDados.add(txtSenha);
 		
+		txtSenha.setEditable(false);
+		
 		JLabel label_9 = new JLabel("Endere\u00E7o");
 		label_9.setHorizontalAlignment(SwingConstants.LEFT);
 		label_9.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -158,15 +202,56 @@ public class PerfilCliente extends JPanel {
 		editorPaneEndereco.setBounds(10, 140, 505, 73);
 		panelDados.add(editorPaneEndereco);
 		
-		JButton btnSalvar = new JButton("Salvar");
-		btnSalvar.setBounds(535, 190, 95, 23);
-		panelDados.add(btnSalvar);
+		editorPaneEndereco.setEditable(false);
 		
 		JButton btnEditar = new JButton("Editar");
+		btnEditar.setForeground(new Color(0, 128, 128));
+		btnEditar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				txtEmail.setEditable(true);
+				txtNomeUsuario.setEditable(true);
+				txtSenha.setEditable(true);
+				txtNome.setEditable(true);
+				txtSexo.setEditable(true);
+				
+				formattedTextField_CPF.setEditable(true);
+				formattedTextFieldDtNascimento.setEditable(true);
+				formattedTextFieldRG.setEditable(true);
+				formattedTextFieldTelefone.setEditable(true);
+				
+				editorPaneEndereco.setEditable(true);
+				
+			}
+		});
 		btnEditar.setBounds(535, 156, 95, 23);
 		panelDados.add(btnEditar);
 		
+		JButton btnSalvar = new JButton("Salvar");
+		btnSalvar.setForeground(new Color(0, 128, 0));
+		btnSalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				txtEmail.setEditable(false);
+				txtNomeUsuario.setEditable(false);
+				txtSenha.setEditable(false);
+				txtNome.setEditable(false);
+				txtSexo.setEditable(false);
+				
+				formattedTextField_CPF.setEditable(false);
+				formattedTextFieldDtNascimento.setEditable(false);
+				formattedTextFieldRG.setEditable(false);
+				formattedTextFieldTelefone.setEditable(false);
+				
+				editorPaneEndereco.setEditable(false);
+				
+			}
+		});
+		btnSalvar.setBounds(535, 190, 95, 23);
+		panelDados.add(btnSalvar);
+		
 		JButton btnEcluirConta = new JButton("Excluir Conta");
+		btnEcluirConta.setForeground(new Color(255, 0, 0));
 		btnEcluirConta.setBounds(535, 122, 95, 23);
 		panelDados.add(btnEcluirConta);
 		
@@ -174,19 +259,21 @@ public class PerfilCliente extends JPanel {
 		panelPlanos.setLayout(null);
 		tabbedPane.addTab("Planos", null, panelPlanos, null);
 		
-		JLabel label_10 = new JLabel("Mensagens recebidas");
-		label_10.setHorizontalAlignment(SwingConstants.LEFT);
-		label_10.setFont(new Font("Arial", Font.PLAIN, 13));
-		label_10.setBounds(10, 11, 141, 14);
-		panelPlanos.add(label_10);
+		JButton btnAdicionarPlano = new JButton("Adicionar plano");
+		btnAdicionarPlano.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btnAdicionarPlano.setBounds(520, 190, 105, 23);
+		panelPlanos.add(btnAdicionarPlano);
 		
-		JButton button = new JButton("Nova mensagem");
-		button.setBounds(501, 190, 124, 23);
-		panelPlanos.add(button);
+		JButton btnExcluirPlano = new JButton("Excluir plano");
+		btnExcluirPlano.setBounds(520, 156, 105, 23);
+		panelPlanos.add(btnExcluirPlano);
 		
-		JButton button_1 = new JButton("Excluir mensagem");
-		button_1.setBounds(501, 156, 124, 23);
-		panelPlanos.add(button_1);
+		JButton btnPagarPlano = new JButton("Pagamento");
+		btnPagarPlano.setBounds(520, 11, 105, 23);
+		panelPlanos.add(btnPagarPlano);
 		
 		JPanel panelAgendamentosConsultas = new JPanel();
 		tabbedPane.addTab("Agendamentos de Consultas", null, panelAgendamentosConsultas, null);
@@ -238,6 +325,21 @@ public class PerfilCliente extends JPanel {
 		
 		JPanel panelHistorico = new JPanel();
 		tabbedPane.addTab("Hist\u00F3rico de Agendamentos", null, panelHistorico, null);
+		panelHistorico.setLayout(null);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 11, 615, 202);
+		panelHistorico.add(scrollPane);
+		
+		tblHistorico = new JTable();
+		tblHistorico.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"M\u00E9dico", "Dia / M\u00EAs", "Hor\u00E1rio"
+			}
+		));
+		scrollPane.setViewportView(tblHistorico);
 		
 		JPanel panelMensagens = new JPanel();
 		tabbedPane.addTab("Caixa de Mensagens", null, panelMensagens, null);

@@ -1,8 +1,8 @@
 package Model;
 
-public class Secretaria {
+public class Atendente {
 	
-	private static int idSecretaria;
+	private static int idAtendente;
 	private String nome;
 	private String dtNascimento;
 	private String telefone;
@@ -14,15 +14,15 @@ public class Secretaria {
 	private int rg;
 	private int cpf;
 	
-	public Secretaria() {
+	public Atendente() {
 		
-		idSecretaria++;
+		idAtendente++;
 		
 	}
 	
-	public Secretaria(String nome, String dtNascimento, String telefone, String endereco, String sexo, String email, String login, String senha, int rg, int cpf) {
+	public Atendente(String nome, String dtNascimento, String telefone, String endereco, String sexo, String email, String login, String senha, int rg, int cpf) {
 		
-		idSecretaria++;
+		idAtendente++;
 		
 		this.nome = nome;
 		this.dtNascimento = dtNascimento;
@@ -37,8 +37,8 @@ public class Secretaria {
 		
 	}
 
-	public static int getIdSecretaria() {
-		return idSecretaria;
+	public static int getIdAtendente() {
+		return idAtendente;
 	}
 
 	public String getNome() {

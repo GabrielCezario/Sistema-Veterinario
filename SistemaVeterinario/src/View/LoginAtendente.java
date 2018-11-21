@@ -13,6 +13,9 @@ import javax.swing.JScrollPane;
 import java.awt.SystemColor;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
+import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.awt.event.ActionEvent;
 
 public class LoginAtendente extends JPanel {
 	private JTextField txtLogin;
@@ -38,6 +41,8 @@ public class LoginAtendente extends JPanel {
 		panelErroLogin.setBackground(Color.RED);
 		panelErroLogin.setBounds(0, 33, 640, 34);
 		add(panelErroLogin);
+		
+		panelErroLogin.setVisible(false);
 		
 		JLabel lblLoginOuSenha = new JLabel("Login ou Senha est\u00E3o incorretos!");
 		lblLoginOuSenha.setForeground(Color.WHITE);
@@ -77,14 +82,47 @@ public class LoginAtendente extends JPanel {
 		add(pswSenha);
 		
 		JButton btnVoltar = new JButton("Voltar");
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				Main.getFrame().setContentPane(new Inicio());
+				Main.getFrame().getContentPane().revalidate();
+				
+			}
+		});
 		btnVoltar.setBounds(10, 446, 89, 23);
 		add(btnVoltar);
 		
 		JButton btnEntrar = new JButton("Entrar");
+		btnEntrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					Main.getFrame().setContentPane(new PerfilAtendente());
+					Main.getFrame().getContentPane().revalidate();
+				} catch (ParseException e1) {
+					e1.printStackTrace();
+				}
+				
+				
+			}
+		});
 		btnEntrar.setBounds(234, 303, 103, 23);
 		add(btnEntrar);
 		
 		JButton btnCadastrarse = new JButton("Cadastrar-se");
+		btnCadastrarse.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					Main.getFrame().setContentPane(new CadastroAtendente());
+					Main.getFrame().getContentPane().revalidate();
+				} catch (ParseException e1) {
+					e1.printStackTrace();
+				}
+				
+			}
+		});
 		btnCadastrarse.setBounds(358, 303, 103, 23);
 		add(btnCadastrarse);
 

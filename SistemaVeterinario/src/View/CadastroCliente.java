@@ -1,14 +1,12 @@
 package View;
 
 import javax.swing.JPanel;
-import java.awt.Color;
-import javax.swing.JLabel;
-import java.awt.Font;
-import java.text.ParseException;
-
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.text.MaskFormatter;
+
+import Model.Cliente;
+
 import javax.swing.JTextField;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JMenu;
@@ -17,6 +15,15 @@ import javax.swing.JLayeredPane;
 import javax.swing.JFormattedTextField;
 import javax.swing.JEditorPane;
 import javax.swing.JPasswordField;
+import javax.swing.JLabel;
+
+import java.awt.Font;
+import java.awt.Color;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+import java.text.ParseException;
 
 public class CadastroCliente extends JPanel {
 	private JTextField txtNome;
@@ -25,10 +32,7 @@ public class CadastroCliente extends JPanel {
 	private JTextField txtNomeUsuario;
 	private JPasswordField passwordField;
 
-	/**
-	 * Create the panel.
-	 * @throws ParseException 
-	 */
+
 	public CadastroCliente() throws ParseException {
 		setLayout(null);
 		
@@ -158,6 +162,10 @@ public class CadastroCliente extends JPanel {
 		lblSenha.setBounds(10, 238, 44, 14);
 		add(lblSenha);
 		
+		passwordField = new JPasswordField();
+		passwordField.setBounds(54, 236, 276, 20);
+		add(passwordField);
+		
 		JLabel lblDados = new JLabel("Informa\u00E7\u00F5es de Dados");
 		lblDados.setFont(new Font("Arial", Font.PLAIN, 20));
 		lblDados.setBounds(10, 45, 207, 25);
@@ -169,20 +177,68 @@ public class CadastroCliente extends JPanel {
 		add(lblNewLabel);
 		
 		JButton btnVoltar = new JButton("Voltar");
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				Main.getFrame().setContentPane(new LoginCliente());
+				Main.getFrame().getContentPane().revalidate();
+				
+			}
+		});
 		btnVoltar.setBounds(10, 446, 89, 23);
 		add(btnVoltar);
 		
 		JButton btnLimpar = new JButton("Limpar");
+		btnLimpar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				//Text Field
+				txtNome.setText("");
+				txtSexo.setText("");
+				txtEmail.setText("");
+				txtNomeUsuario.setText("");
+				
+				//Formatted Text Field
+				formattedTelefone.setText("");
+				ftfDtNascimento.setText("");
+				formattedCPF.setText("");
+				formattedRG.setText("");
+				
+				//password text Field
+				passwordField.setText("");
+				
+				//Editor Pane
+				editorPaneEndereco.setText("");
+				
+			}
+		});
 		btnLimpar.setBounds(277, 446, 89, 23);
 		add(btnLimpar);
 		
 		JButton btnCadastrar = new JButton("Cadastrar");
+		btnCadastrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				Cliente cliente = new Cliente();
+				
+				cliente.setNome(txtNome.getText());
+				cliente.setSexo(txtSexo.getText());
+				cliente.setEmail(txtEmail.getText());
+				cliente.setLogin(txtNomeUsuario.getText());
+				
+				cliente.setTelefone(formattedTelefone.getText());
+				cliente.setDtNascimento(ftfDtNascimento.getText());
+				cliente.setRg(Integer.parseInt(formattedRG.getText()));
+				cliente.setCpf(Integer.parseInt(formattedCPF.getText()));
+				
+				cliente.setSenha(passwordField.getText());
+				cliente.setEndereco(editorPaneEndereco.getText());
+				
+				
+			}
+		});
 		btnCadastrar.setBounds(541, 446, 89, 23);
 		add(btnCadastrar);
-		
-		passwordField = new JPasswordField();
-		passwordField.setBounds(54, 236, 276, 20);
-		add(passwordField);
 
 	}
 }
