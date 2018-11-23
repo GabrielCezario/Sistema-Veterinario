@@ -4,18 +4,17 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-import java.awt.Font;
-import java.awt.Color;
-import javax.swing.JDesktopPane;
-import javax.swing.JToolBar;
-import javax.swing.JTabbedPane;
-import javax.swing.JScrollPane;
-import java.awt.SystemColor;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
+import javax.swing.ImageIcon;
+
+import java.awt.Font;
+import java.awt.Color;
+import java.awt.SystemColor;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
 import java.awt.event.ActionEvent;
+
+import java.text.ParseException;
 
 public class LoginAtendente extends JPanel {
 	private JTextField txtLogin;
@@ -48,17 +47,6 @@ public class LoginAtendente extends JPanel {
 		lblLoginOuSenha.setForeground(Color.WHITE);
 		lblLoginOuSenha.setFont(new Font("Arial", Font.PLAIN, 20));
 		panelErroLogin.add(lblLoginOuSenha);
-		
-		JPanel panelFoto = new JPanel();
-		panelFoto.setBackground(Color.RED);
-		panelFoto.setBounds(246, 78, 150, 150);
-		add(panelFoto);
-		
-		JLabel lblfotoAqui = new JLabel("[FOTO AQUI]");
-		lblfotoAqui.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblfotoAqui.setForeground(Color.WHITE);
-		lblfotoAqui.setBackground(Color.WHITE);
-		panelFoto.add(lblfotoAqui);
 		
 		JLabel lblLogin = new JLabel("Login");
 		lblLogin.setHorizontalAlignment(SwingConstants.CENTER);
@@ -125,6 +113,11 @@ public class LoginAtendente extends JPanel {
 		});
 		btnCadastrarse.setBounds(358, 303, 103, 23);
 		add(btnCadastrarse);
+		
+		JLabel lblImagemLogin = new JLabel();
+		lblImagemLogin.setIcon(new ImageIcon("C:\\Users\\Gabriel\\git\\Sistema-Veterinario\\SistemaVeterinario\\Imagens\\ImagemLogin.png"));
+		lblImagemLogin.setBounds(246, 78, 150, 150);
+		add(lblImagemLogin);
 
 	}
 }

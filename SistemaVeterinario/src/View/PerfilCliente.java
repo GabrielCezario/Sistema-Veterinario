@@ -20,6 +20,10 @@ import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.BevelBorder;
+import javax.swing.JList;
+import javax.swing.AbstractListModel;
 
 public class PerfilCliente extends JPanel {
 	private JTextField txtNome;
@@ -332,13 +336,29 @@ public class PerfilCliente extends JPanel {
 		panelHistorico.add(scrollPane);
 		
 		tblHistorico = new JTable();
+		tblHistorico.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		tblHistorico.setModel(new DefaultTableModel(
 			new Object[][] {
+				
 			},
 			new String[] {
 				"M\u00E9dico", "Dia / M\u00EAs", "Hor\u00E1rio"
 			}
-		));
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		tblHistorico.getColumnModel().getColumn(0).setResizable(false);
+		tblHistorico.getColumnModel().getColumn(1).setResizable(false);
+		tblHistorico.getColumnModel().getColumn(1).setMinWidth(75);
+		tblHistorico.getColumnModel().getColumn(1).setMaxWidth(75);
+		tblHistorico.getColumnModel().getColumn(2).setResizable(false);
+		tblHistorico.getColumnModel().getColumn(2).setMinWidth(75);
+		tblHistorico.getColumnModel().getColumn(2).setMaxWidth(75);
 		scrollPane.setViewportView(tblHistorico);
 		
 		JPanel panelMensagens = new JPanel();
@@ -358,6 +378,23 @@ public class PerfilCliente extends JPanel {
 		JButton btnExcluirMensagem = new JButton("Excluir mensagem");
 		btnExcluirMensagem.setBounds(501, 156, 124, 23);
 		panelMensagens.add(btnExcluirMensagem);
+		
+		JScrollPane spMensagens = new JScrollPane();
+		spMensagens.setBounds(10, 36, 480, 177);
+		panelMensagens.add(spMensagens);
+		
+		JList listMensagens = new JList();
+		listMensagens.setModel(new AbstractListModel() {
+			String[] values = new String[] {};
+			public int getSize() {
+				return values.length;
+			}
+			public Object getElementAt(int index) {
+				return values[index];
+			}
+		});
+		listMensagens.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		spMensagens.setViewportView(listMensagens);
 
 	}
 }

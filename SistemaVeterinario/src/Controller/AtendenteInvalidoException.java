@@ -1,7 +1,7 @@
-package Exceptions;
+package Controller;
 
-public class ClienteInvalidoException extends Exception{
-
+public class AtendenteInvalidoException extends Exception{
+	
 	private boolean nomeVazio;
 	private boolean dtNascimentoVazio;
 	private boolean telefoneVazio;
@@ -13,7 +13,7 @@ public class ClienteInvalidoException extends Exception{
 	private boolean rgVazio;
 	private boolean cpfVazio;
 	
-	public ClienteInvalidoException() {
+	public AtendenteInvalidoException() {
 		
 	}
 
@@ -96,5 +96,5 @@ public class ClienteInvalidoException extends Exception{
 	public void setCpfVazio(boolean cpfVazio) {
 		this.cpfVazio = cpfVazio;
 	}
-
+	
 }

@@ -1,7 +1,7 @@
-package Exceptions;
+package Controller;
 
-public class VeterinarioInvalidoException extends Exception{
-	
+public class ClienteInvalidoException extends Exception{
+
 	private boolean nomeVazio;
 	private boolean dtNascimentoVazio;
 	private boolean telefoneVazio;
@@ -10,11 +10,10 @@ public class VeterinarioInvalidoException extends Exception{
 	private boolean emailVazio;
 	private boolean loginVazio;
 	private boolean senhaVazio;
-	private boolean especialidadeVazio;
 	private boolean rgVazio;
 	private boolean cpfVazio;
 	
-	public VeterinarioInvalidoException() {
+	public ClienteInvalidoException() {
 		
 	}
 
@@ -81,15 +80,7 @@ public class VeterinarioInvalidoException extends Exception{
 	public void setSenhaVazio(boolean senhaVazio) {
 		this.senhaVazio = senhaVazio;
 	}
-
-	public boolean isEspecialidadeVazio() {
-		return especialidadeVazio;
-	}
-
-	public void setEspecialidadeVazio(boolean especialidadeVazio) {
-		this.especialidadeVazio = especialidadeVazio;
-	}
-
+	
 	public boolean isRgVazio() {
 		return rgVazio;
 	}
@@ -105,4 +96,5 @@ public class VeterinarioInvalidoException extends Exception{
 	public void setCpfVazio(boolean cpfVazio) {
 		this.cpfVazio = cpfVazio;
 	}
+
 }

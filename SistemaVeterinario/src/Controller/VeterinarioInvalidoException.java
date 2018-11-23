@@ -1,6 +1,6 @@
-package Exceptions;
+package Controller;
 
-public class AtendenteInvalidoException extends Exception{
+public class VeterinarioInvalidoException extends Exception{
 	
 	private boolean nomeVazio;
 	private boolean dtNascimentoVazio;
@@ -10,10 +10,11 @@ public class AtendenteInvalidoException extends Exception{
 	private boolean emailVazio;
 	private boolean loginVazio;
 	private boolean senhaVazio;
+	private boolean especialidadeVazio;
 	private boolean rgVazio;
 	private boolean cpfVazio;
 	
-	public AtendenteInvalidoException() {
+	public VeterinarioInvalidoException() {
 		
 	}
 
@@ -80,7 +81,23 @@ public class AtendenteInvalidoException extends Exception{
 	public void setSenhaVazio(boolean senhaVazio) {
 		this.senhaVazio = senhaVazio;
 	}
-	
+
+	public boolean isEspecialidadeVazio() {
+		return especialidadeVazio;
+	}
+
+	public void setEspecialidadeVazio(boolean especialidadeVazio) {
+		this.especialidadeVazio = especialidadeVazio;
+	}
+
+	public boolean isRgVazio() {
+		return rgVazio;
+	}
+
+	public void setRgVazio(boolean rgVazio) {
+		this.rgVazio = rgVazio;
+	}
+
 	public boolean isCpfVazio() {
 		return cpfVazio;
 	}
@@ -88,5 +105,4 @@ public class AtendenteInvalidoException extends Exception{
 	public void setCpfVazio(boolean cpfVazio) {
 		this.cpfVazio = cpfVazio;
 	}
-	
 }

@@ -20,6 +20,13 @@ import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JList;
+import javax.swing.AbstractListModel;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.LineBorder;
 
 public class PerfilVeterinario extends JPanel {
 	private JTextField txtNome;
@@ -203,10 +210,12 @@ public class PerfilVeterinario extends JPanel {
 		editorPaneEndereco.setEditable(false);
 		
 		JButton btnEcluirConta = new JButton("Excluir Conta");
+		btnEcluirConta.setForeground(Color.RED);
 		btnEcluirConta.setBounds(535, 122, 95, 23);
 		panelDados.add(btnEcluirConta);
 		
 		JButton btnEditar = new JButton("Editar");
+		btnEditar.setForeground(new Color(0, 128, 128));
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -229,6 +238,7 @@ public class PerfilVeterinario extends JPanel {
 		panelDados.add(btnEditar);
 		
 		JButton btnSalvar = new JButton("Salvar");
+		btnSalvar.setForeground(new Color(0, 128, 0));
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -259,13 +269,28 @@ public class PerfilVeterinario extends JPanel {
 		panelHistorico.add(scrollPane);
 		
 		table = new JTable();
+		table.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
 			new String[] {
 				"Cliente", "Dia / M\u00EAs", "Hor\u00E1rio"
 			}
-		));
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(1).setResizable(false);
+		table.getColumnModel().getColumn(1).setMinWidth(75);
+		table.getColumnModel().getColumn(1).setMaxWidth(75);
+		table.getColumnModel().getColumn(2).setResizable(false);
+		table.getColumnModel().getColumn(2).setMinWidth(75);
+		table.getColumnModel().getColumn(2).setMaxWidth(75);
 		scrollPane.setViewportView(table);
 		
 		JPanel panelMensagens = new JPanel();
@@ -285,6 +310,23 @@ public class PerfilVeterinario extends JPanel {
 		JButton btnExcluirMensagem = new JButton("Excluir mensagem");
 		btnExcluirMensagem.setBounds(501, 156, 124, 23);
 		panelMensagens.add(btnExcluirMensagem);
+		
+		JScrollPane spMensagens = new JScrollPane();
+		spMensagens.setBounds(10, 36, 481, 177);
+		panelMensagens.add(spMensagens);
+		
+		JList list = new JList();
+		list.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		list.setModel(new AbstractListModel() {
+			String[] values = new String[] {};
+			public int getSize() {
+				return values.length;
+			}
+			public Object getElementAt(int index) {
+				return values[index];
+			}
+		});
+		spMensagens.setViewportView(list);
 
 	}
 }

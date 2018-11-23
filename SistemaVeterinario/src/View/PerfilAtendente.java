@@ -27,6 +27,7 @@ import javax.swing.JTextArea;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+import javax.swing.JList;
 
 public class PerfilAtendente extends JPanel {
 	private JTextField txtNome;
@@ -214,12 +215,13 @@ public class PerfilAtendente extends JPanel {
 		editorPaneEndereco.setEditable(false);
 		
 		JButton btnEcluirConta = new JButton("Excluir Conta");
-		btnEcluirConta.setForeground(Color.BLACK);
+		btnEcluirConta.setForeground(Color.RED);
 		btnEcluirConta.setBackground(Color.WHITE);
 		btnEcluirConta.setBounds(535, 122, 95, 23);
 		panelDados.add(btnEcluirConta);
 		
 		JButton btnEditar = new JButton("Editar");
+		btnEditar.setForeground(new Color(0, 128, 128));
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -242,6 +244,7 @@ public class PerfilAtendente extends JPanel {
 		panelDados.add(btnEditar);
 		
 		JButton btnSalvar = new JButton("Salvar");
+		btnSalvar.setForeground(new Color(0, 128, 0));
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -279,19 +282,25 @@ public class PerfilAtendente extends JPanel {
 		
 		tblClientes = new JTable();
 		tblClientes.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		
 		tblClientes.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null},
-				{null, null},
-				{null, null},
-				{null, null},
 			},
 			new String[] {
 				"ID", "Nome Completo"
 			}
-		));
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		tblClientes.getColumnModel().getColumn(0).setResizable(false);
 		tblClientes.getColumnModel().getColumn(0).setPreferredWidth(50);
+		tblClientes.getColumnModel().getColumn(0).setMinWidth(50);
+		tblClientes.getColumnModel().getColumn(0).setMaxWidth(50);
+		tblClientes.getColumnModel().getColumn(1).setResizable(false);
 		
 		spClientes.setViewportView(tblClientes);
 		
@@ -358,13 +367,28 @@ public class PerfilAtendente extends JPanel {
 		panelAgendamentosConsultas.add(scrollPane_1);
 		
 		tblConsultasCriadas = new JTable();
+		tblConsultasCriadas.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		tblConsultasCriadas.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
 			new String[] {
 				"Veterin\u00E1rio", "Dia / M\u00EAs", "Hor\u00E1rio"
 			}
-		));
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		tblConsultasCriadas.getColumnModel().getColumn(0).setResizable(false);
+		tblConsultasCriadas.getColumnModel().getColumn(1).setResizable(false);
+		tblConsultasCriadas.getColumnModel().getColumn(1).setMinWidth(75);
+		tblConsultasCriadas.getColumnModel().getColumn(1).setMaxWidth(75);
+		tblConsultasCriadas.getColumnModel().getColumn(2).setResizable(false);
+		tblConsultasCriadas.getColumnModel().getColumn(2).setMinWidth(75);
+		tblConsultasCriadas.getColumnModel().getColumn(2).setMaxWidth(75);
 		scrollPane_1.setViewportView(tblConsultasCriadas);
 		
 		JLabel lblConsultasMarcadas = new JLabel("Consultas criadas");
@@ -389,7 +413,19 @@ public class PerfilAtendente extends JPanel {
 			new String[] {
 				"ID", "Nome Completo"
 			}
-		));
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		tblVeterinario.getColumnModel().getColumn(0).setResizable(false);
+		tblVeterinario.getColumnModel().getColumn(0).setPreferredWidth(50);
+		tblVeterinario.getColumnModel().getColumn(0).setMinWidth(50);
+		tblVeterinario.getColumnModel().getColumn(0).setMaxWidth(50);
+		tblVeterinario.getColumnModel().getColumn(1).setResizable(false);
 		spVeterinario.setViewportView(tblVeterinario);
 		
 		JButton button = new JButton("Visualizar");
@@ -430,7 +466,22 @@ public class PerfilAtendente extends JPanel {
 			new String[] {
 				"Cliente", "Veterin\u00E1rio", "Dia / M\u00EAs", "Hora"
 			}
-		));
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(1).setResizable(false);
+		table.getColumnModel().getColumn(2).setResizable(false);
+		table.getColumnModel().getColumn(2).setMinWidth(75);
+		table.getColumnModel().getColumn(2).setMaxWidth(75);
+		table.getColumnModel().getColumn(3).setResizable(false);
+		table.getColumnModel().getColumn(3).setMinWidth(75);
+		table.getColumnModel().getColumn(3).setMaxWidth(75);
 		scrollPane.setViewportView(table);
 		
 		JPanel panelMensagens = new JPanel();
@@ -450,6 +501,14 @@ public class PerfilAtendente extends JPanel {
 		JButton btnExcluirMensagem = new JButton("Excluir mensagem");
 		btnExcluirMensagem.setBounds(501, 156, 124, 23);
 		panelMensagens.add(btnExcluirMensagem);
+		
+		JScrollPane spMensagens = new JScrollPane();
+		spMensagens.setBounds(10, 36, 481, 177);
+		panelMensagens.add(spMensagens);
+		
+		JList listMensagens = new JList();
+		listMensagens.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		spMensagens.setViewportView(listMensagens);
 
 	}
 }

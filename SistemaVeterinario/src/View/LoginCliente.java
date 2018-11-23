@@ -4,18 +4,17 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-import java.awt.Font;
-import java.awt.Color;
-import javax.swing.JDesktopPane;
-import javax.swing.JToolBar;
-import javax.swing.JTabbedPane;
-import javax.swing.JScrollPane;
-import java.awt.SystemColor;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
+import javax.swing.ImageIcon;
+
+import java.awt.Font;
+import java.awt.Color;
+import java.awt.SystemColor;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
 import java.awt.event.ActionEvent;
+
+import java.text.ParseException;
 
 public class LoginCliente extends JPanel {
 	private JTextField txtLogin;
@@ -70,17 +69,6 @@ public class LoginCliente extends JPanel {
 		pswSenha.setBounds(234, 272, 227, 20);
 		add(pswSenha);
 		
-		JPanel panel = new JPanel();
-		panel.setBackground(Color.RED);
-		panel.setBounds(246, 78, 150, 150);
-		add(panel);
-		
-		JLabel lblfotoAqui = new JLabel("[FOTO AQUI]");
-		lblfotoAqui.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblfotoAqui.setForeground(Color.WHITE);
-		lblfotoAqui.setBackground(Color.WHITE);
-		panel.add(lblfotoAqui);
-		
 		JButton btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -125,6 +113,11 @@ public class LoginCliente extends JPanel {
 		});
 		btnCadastrarse.setBounds(358, 303, 103, 23);
 		add(btnCadastrarse);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Gabriel\\git\\Sistema-Veterinario\\SistemaVeterinario\\Imagens\\ImagemLogin.png"));
+		lblNewLabel.setBounds(247, 78, 150, 150);
+		add(lblNewLabel);
 
 	}
 }
