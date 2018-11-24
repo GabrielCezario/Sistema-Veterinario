@@ -98,10 +98,7 @@ public class ControladorCadastroCliente {
 			clienteInvalidoException.setSenhaVazio(true);
 		}
 
-		if (cliente.getRg() != 1111111 && cliente.getRg() != 2222222 && cliente.getRg() != 3333333
-				&& cliente.getRg() != 4444444 && cliente.getRg() != 5555555 && cliente.getRg() != 6666666
-				&& cliente.getRg() != 7777777 && cliente.getRg() != 8888888 && cliente.getRg() != 9999999
-				&& cliente.getRg() != 0000000 && cliente.getRg() != 1234567 && cliente.getRg() != 7654321) {
+		if (cliente.getRg() == null || cliente.getRg().trim().isEmpty()) {
 
 			if (clienteInvalidoException == null) {
 				clienteInvalidoException = new ClienteInvalidoException();
@@ -110,10 +107,7 @@ public class ControladorCadastroCliente {
 			clienteInvalidoException.setRgVazio(true);
 		}
 
-		if (cliente.getCpf() != 999999999 && cliente.getCpf() != 222222222 && cliente.getCpf() != 333333333
-				&& cliente.getCpf() != 444444444 && cliente.getCpf() != 555555555 && cliente.getCpf() != 666666666
-				&& cliente.getCpf() != 777777777 && cliente.getCpf() != 888888888 && cliente.getCpf() != 999999999
-				&& cliente.getCpf() != 000000000 && cliente.getCpf() != 123456789 && cliente.getCpf() != 987654321) {
+		if (cliente.getCpf() == null || cliente.getCpf().trim().isEmpty()) {
 
 			if (clienteInvalidoException == null) {
 				clienteInvalidoException = new ClienteInvalidoException();

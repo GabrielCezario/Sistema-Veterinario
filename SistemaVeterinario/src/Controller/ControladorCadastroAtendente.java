@@ -77,9 +77,7 @@ public class ControladorCadastroAtendente {
 			atendenteInvalidoException.setEmailVazio(true);
 		}
 
-		if (!(atendente.getRg() == 1111111 && atendente.getRg() == 2222222 && atendente.getRg() == 3333333 && atendente.getRg() == 4444444 && 
-			  atendente.getRg() == 5555555 && atendente.getRg() == 6666666 && atendente.getRg() == 7777777 && atendente.getRg() == 8888888 && 
-			  atendente.getRg() == 9999999 && atendente.getRg() == 1234567 && atendente.getRg() == 7654321)) {
+		if (atendente.getRg() == null || atendente.getRg().trim().isEmpty()) {
 
 			if (atendenteInvalidoException == null) {
 				atendenteInvalidoException = new AtendenteInvalidoException();
@@ -88,9 +86,7 @@ public class ControladorCadastroAtendente {
 			atendenteInvalidoException.setRgVazio(true);
 		}
 		
-		if (!(atendente.getCpf() == 111111111 && atendente.getCpf() == 222222222 && atendente.getCpf() == 333333333 && atendente.getCpf() == 444444444 && 
-			  atendente.getCpf() == 555555555 && atendente.getCpf() == 666666666 && atendente.getCpf() == 777777777 && atendente.getCpf() == 888888888 && 
-			  atendente.getCpf() == 999999999 && atendente.getCpf() == 123456789 && atendente.getCpf() == 987654321)) {
+		if (atendente.getCpf() == null || atendente.getCpf().trim().isEmpty()) {
 
 			if (atendenteInvalidoException == null) {
 				atendenteInvalidoException = new AtendenteInvalidoException();

@@ -11,10 +11,8 @@ public class Cliente {
 	private String email;
 	private String login;
 	private String senha;
-	private int rg;
-	private int cpf;
-	
-	//testando
+	private String rg;
+	private String cpf;
 
 	public Cliente() {
 		
@@ -22,7 +20,7 @@ public class Cliente {
 		
 	}
 
-	public Cliente(String nome, String dtNascimento, String telefone, String endereco, String sexo, String email, String login, String senha, int rg, int cpf) {
+	public Cliente(String nome, String dtNascimento, String telefone, String endereco, String sexo, String email, String login, String senha, String rg, String cpf) {
 		
 		idCliente++;
 		
@@ -109,19 +107,19 @@ public class Cliente {
 		this.senha = senha;
 	}
 
-	public int getRg() {
+	public String getRg() {
 		return rg;
 	}
 
-	public void setRg(int rg) {
+	public void setRg(String rg) {
 		this.rg = rg;
 	}
 
-	public int getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
 
-	public void setCpf(int cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}	
 

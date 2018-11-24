@@ -226,8 +226,8 @@ public class CadastroAtendente extends JPanel {
 				
 				atendente.setTelefone(ftfTelefone.getText());
 				atendente.setDtNascimento(ftfDtNascimento.getText());
-				atendente.setRg(Integer.parseInt(ftfRG.getText()));
-				atendente.setCpf(Integer.parseInt(ftfCPF.getText()));
+				atendente.setRg(ftfRG.getText());
+				atendente.setCpf(ftfCPF.getText());
 				
 				atendente.setSenha(passwordFieldSenha.getText());
 				atendente.setEndereco(editorPaneEndereco.getText());

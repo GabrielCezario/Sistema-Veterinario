@@ -228,8 +228,8 @@ public class CadastroCliente extends JPanel {
 				
 				cliente.setTelefone(formattedTelefone.getText());
 				cliente.setDtNascimento(ftfDtNascimento.getText());
-				cliente.setRg(Integer.parseInt(formattedRG.getText()));
-				cliente.setCpf(Integer.parseInt(formattedCPF.getText()));
+				cliente.setRg(formattedRG.getText());
+				cliente.setCpf(formattedCPF.getText());
 				
 				cliente.setSenha(passwordField.getText());
 				cliente.setEndereco(editorPaneEndereco.getText());

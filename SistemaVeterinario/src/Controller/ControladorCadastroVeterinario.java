@@ -119,6 +119,24 @@ public class ControladorCadastroVeterinario {
 			
 		}
 		
+		if (veterinario.getRg() == null || veterinario.getRg().trim().isEmpty()) {
+			
+			if (veterinarioInvalidoException == null) {
+				veterinarioInvalidoException = new VeterinarioInvalidoException();
+			}
+			
+			veterinarioInvalidoException.setRgVazio(true);
+		}
+		
+		if (veterinario.getCpf() == null || veterinario.getCpf().trim().isEmpty()) {
+			
+			if (veterinarioInvalidoException == null) {
+				veterinarioInvalidoException = new VeterinarioInvalidoException();
+			}
+			
+			veterinarioInvalidoException.setCpfVazio(true);
+		}
+		
 		return veterinarioInvalidoException;
 		
 	}

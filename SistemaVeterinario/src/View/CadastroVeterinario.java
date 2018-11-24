@@ -242,8 +242,8 @@ public class CadastroVeterinario extends JPanel {
 				
 				veterinario.setTelefone(ftfTelefone.getText());
 				veterinario.setDtNascimento(ftfDtNascimento.getText());
-				veterinario.setRg(Integer.parseInt(ftfRG.getText()));
-				veterinario.setCpf(Integer.parseInt(ftfCPF.getText()));
+				veterinario.setRg(ftfRG.getText());
+				veterinario.setCpf(ftfCPF.getText());
 				
 				veterinario.setSenha(passwordFieldSenha.getText());
 				veterinario.setEndereco(editorPaneEndereco.getText());
