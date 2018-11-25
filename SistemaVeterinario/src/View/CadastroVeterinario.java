@@ -8,6 +8,8 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.text.MaskFormatter;
 
+import Controller.ControladorCadastroVeterinario;
+import Controller.VeterinarioInvalidoException;
 import Model.Veterinario;
 
 import javax.swing.JTextField;
@@ -247,6 +249,41 @@ public class CadastroVeterinario extends JPanel {
 				
 				veterinario.setSenha(passwordFieldSenha.getText());
 				veterinario.setEndereco(editorPaneEndereco.getText());
+				
+				try {
+					
+					ControladorCadastroVeterinario controladorCadastroVeterinario = new ControladorCadastroVeterinario();
+					controladorCadastroVeterinario.cadastrarVeterinario(veterinario);
+					
+					JDialogUsuarioCriado jDialogUsuarioCriado = new JDialogUsuarioCriado();
+					jDialogUsuarioCriado.setVisible(true);
+					jDialogUsuarioCriado.setLocationRelativeTo(null);
+					
+					//Text Field
+					txtNome.setText("");
+					txtSexo.setText("");
+					txtEmail.setText("");
+					txtNomeUsuario.setText("");
+					
+					//Formatted Text Field
+					ftfTelefone.setText("");
+					ftfDtNascimento.setText("");
+					ftfCPF.setText("");
+					ftfRG.setText("");
+					
+					//password text Field
+					passwordFieldSenha.setText("");
+					
+					//Editor Pane
+					editorPaneEndereco.setText("");
+					
+				} catch (VeterinarioInvalidoException e1) {
+					e1.printStackTrace();
+					
+					JDialogUsuarioNaoCriado jDialogUsuarioNaoCriado = new JDialogUsuarioNaoCriado();
+					jDialogUsuarioNaoCriado.setVisible(true);
+					jDialogUsuarioNaoCriado.setLocationRelativeTo(null);
+				}
 				
 			}
 		});

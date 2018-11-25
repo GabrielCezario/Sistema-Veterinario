@@ -1,6 +1,8 @@
 package Model;
 
-public class Veterinario {
+import java.io.Serializable;
+
+public class Veterinario implements Serializable{
 	
 	private static int idMedico;
 	private String nome;

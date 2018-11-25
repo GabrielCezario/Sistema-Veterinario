@@ -2,6 +2,7 @@ package Controller;
 
 import java.util.List;
 
+import DAO.AtendenteDAO;
 import Model.Atendente;
 
 public class ControladorCadastroAtendente {
@@ -12,10 +13,10 @@ public class ControladorCadastroAtendente {
 
 		AtendenteInvalidoException atendenteInvalidoException = validarAtendente(atendente);
 
-		if (atendente == null) {
-			// AtendenteDAO.adicionarAtendente(atendente);
-		} else {
+		if (atendenteInvalidoException != null) {
 			throw atendenteInvalidoException;
+		} else {
+			AtendenteDAO.criarAtendente(atendente);
 		}
 
 	}
@@ -27,6 +28,7 @@ public class ControladorCadastroAtendente {
 	// ============================================================( METODOS PRIVADOS )===============================================================
 
 	private AtendenteInvalidoException validarAtendente(Atendente atendente) {
+		
 		AtendenteInvalidoException atendenteInvalidoException = null;
 
 		if (atendente.getNome() == null || atendente.getNome().trim().isEmpty()) {

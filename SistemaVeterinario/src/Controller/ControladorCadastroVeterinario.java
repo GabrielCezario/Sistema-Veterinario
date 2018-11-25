@@ -1,11 +1,26 @@
 package Controller;
 
+import DAO.VeterinarioDAO;
 import Model.Veterinario;
 
 public class ControladorCadastroVeterinario {
 	
+	// =============================================================( METODOS PUBLICOS )===================================================
 	
-// >================================ MÉTODOS PRIVADOS ======================================<
+	public void cadastrarVeterinario(Veterinario veterinario) throws VeterinarioInvalidoException {
+		
+		VeterinarioInvalidoException veterinarioInvalidoException = validarVeterinario(veterinario);
+		
+		if (veterinarioInvalidoException != null) {
+			throw veterinarioInvalidoException;
+		} else {
+			VeterinarioDAO.criarVeterinario(veterinario);
+		}
+		
+	}
+	
+	
+	// =============================================================( METODOS PRIVADOS )===================================================
 	
 	private VeterinarioInvalidoException validarVeterinario(Veterinario veterinario) {
 		

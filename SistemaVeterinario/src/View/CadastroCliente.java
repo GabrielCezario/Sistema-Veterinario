@@ -5,6 +5,8 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.text.MaskFormatter;
 
+import Controller.ClienteInvalidoException;
+import Controller.ControladorCadastroCliente;
 import Model.Cliente;
 
 import javax.swing.JTextField;
@@ -233,6 +235,42 @@ public class CadastroCliente extends JPanel {
 				
 				cliente.setSenha(passwordField.getText());
 				cliente.setEndereco(editorPaneEndereco.getText());
+				
+				
+				try {
+					
+					ControladorCadastroCliente controladorCadastroCliente = new ControladorCadastroCliente();
+					controladorCadastroCliente.cadastrarCliente(cliente);
+					
+					JDialogUsuarioCriado jDialogUsuarioCriado = new JDialogUsuarioCriado();
+					jDialogUsuarioCriado.setVisible(true);
+					jDialogUsuarioCriado.setLocationRelativeTo(null);
+					
+					//Text Field
+					txtNome.setText("");
+					txtSexo.setText("");
+					txtEmail.setText("");
+					txtNomeUsuario.setText("");
+					
+					//Formatted Text Field
+					formattedTelefone.setText("");
+					ftfDtNascimento.setText("");
+					formattedCPF.setText("");
+					formattedRG.setText("");
+					
+					//password text Field
+					passwordField.setText("");
+					
+					//Editor Pane
+					editorPaneEndereco.setText("");
+					
+				} catch (ClienteInvalidoException e1) {
+					e1.printStackTrace();
+					
+					JDialogUsuarioNaoCriado jDialogUsuarioNaoCriado = new JDialogUsuarioNaoCriado();
+					jDialogUsuarioNaoCriado.setVisible(true);
+					jDialogUsuarioNaoCriado.setLocationRelativeTo(null);
+				}
 				
 				
 			}

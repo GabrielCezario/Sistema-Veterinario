@@ -8,23 +8,19 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.text.MaskFormatter;
 
+import Controller.AtendenteInvalidoException;
+import Controller.ControladorCadastroAtendente;
 import Model.Atendente;
 
 import javax.swing.JTextField;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JLayeredPane;
 import javax.swing.JFormattedTextField;
 import javax.swing.JEditorPane;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 
-public class CadastroAtendente extends JPanel {
+public class CadastroAtendente extends JPanel{
 	private JTextField txtNome;
 	private JTextField txtSexo;
 	private JTextField txtEmail;
@@ -231,6 +227,41 @@ public class CadastroAtendente extends JPanel {
 				
 				atendente.setSenha(passwordFieldSenha.getText());
 				atendente.setEndereco(editorPaneEndereco.getText());
+				
+				try {
+					
+					ControladorCadastroAtendente controladorCadastroAtendente = new ControladorCadastroAtendente();
+					controladorCadastroAtendente.cadastrarAtendente(atendente);
+					
+					JDialogUsuarioCriado jDialogUsuarioCriado = new JDialogUsuarioCriado();
+					jDialogUsuarioCriado.setVisible(true);
+					jDialogUsuarioCriado.setLocationRelativeTo(null);
+					
+					//Text Field
+					txtNome.setText("");
+					txtSexo.setText("");
+					txtEmail.setText("");
+					txtNomeUsuario.setText("");
+					
+					//Formatted Text Field
+					ftfTelefone.setText("");
+					ftfDtNascimento.setText("");
+					ftfCPF.setText("");
+					ftfRG.setText("");
+					
+					//password text Field
+					passwordFieldSenha.setText("");
+					
+					//Editor Pane
+					editorPaneEndereco.setText("");
+					
+				} catch (AtendenteInvalidoException e) {
+					e.printStackTrace();
+					
+					JDialogUsuarioNaoCriado jDialogUsuarioNaoCriado = new JDialogUsuarioNaoCriado();
+					jDialogUsuarioNaoCriado.setVisible(true);
+					jDialogUsuarioNaoCriado.setLocationRelativeTo(null);
+				}
 				
 				
 			}

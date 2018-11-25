@@ -2,21 +2,21 @@ package Controller;
 
 import java.util.List;
 
+import DAO.ClienteDAO;
 import Model.Cliente;
 
 public class ControladorCadastroCliente {
 
-	// =============================================================( METODOS
-	// PUBLICOS )===============================================================
+	// =============================================================( METODOS PUBLICOS )===================================================
 
 	public void cadastrarCliente(Cliente cliente) throws ClienteInvalidoException {
 
 		ClienteInvalidoException clienteInvalidoException = validarCliente(cliente);
 
-		if (cliente == null) {
-			// ClienteDAO.adicionarCliente(cliente);
-		} else {
+		if (clienteInvalidoException != null) {
 			throw clienteInvalidoException;
+		} else {
+			ClienteDAO.criarCliente(cliente);
 		}
 
 	}
@@ -25,8 +25,7 @@ public class ControladorCadastroCliente {
 		return null;// ClienteDao.listarTodosClientes();
 	}
 
-	// =============================================================( METODOS
-	// PRIVADOS )===============================================================
+	// =============================================================( METODOS PRIVADOS )===================================================
 
 	private ClienteInvalidoException validarCliente(Cliente cliente) {
 
@@ -115,34 +114,6 @@ public class ControladorCadastroCliente {
 
 			clienteInvalidoException.setCpfVazio(true);
 		}
-
-//==============================================================//		
-/*		int contador_rg=0;
-		
-		for (int i = 1; i <= 1; i++) {
-			for (int j = 2; j <=7; j++) {
-
-				
-				if (cliente.getRg().charAt(i) == cliente.getRg().charAt(j)) {
-
-					contador_rg++;
-					
-				}
-			}
-		}
-
-		if (contador_rg==6) {
-			if (clienteInvalidoException == null) {
-				clienteInvalidoException = new ClienteInvalidoException();
-			}
-			
-			clienteInvalidoException.setRgVazio(true);
-		}
-		
-*/	
-//===============================================================//
-		
-		
 		
 		return clienteInvalidoException;
 

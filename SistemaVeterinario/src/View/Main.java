@@ -1,7 +1,10 @@
 package View;
 
 import java.awt.EventQueue;
+import java.io.File;
+
 import javax.swing.JFrame;
+
 
 public class Main {
 
@@ -12,8 +15,12 @@ public class Main {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					
+					IniciarDB();
+					
 					Main window = new Main();
 					window.frame.setVisible(true);
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -38,6 +45,9 @@ public class Main {
 		        }
 		        
 		        //===========================================================================================================
+		        
+		        
+		        
 				
 			}
 		});
@@ -62,6 +72,31 @@ public class Main {
 	
 	public static JFrame getFrame() {
 		return frame;
+	}
+	
+	public static void IniciarDB() {
+		
+		File DataBase = new File("DataBase");
+		File ClienteDataBase = new File("DataBase\\ClienteDataBase");
+		File AtendenteDataBase = new File("DataBase\\AtendenteDataBase");
+		File VeterinarioDataBase = new File("DataBase\\VeterinarioDataBase");
+		
+		if (!DataBase.exists()) {
+			DataBase.mkdir();
+			
+			if (!ClienteDataBase.exists()) {
+				ClienteDataBase.mkdir();
+			}
+			
+			if (!AtendenteDataBase.exists()) {
+				AtendenteDataBase.mkdir();
+			}
+			
+			if (!VeterinarioDataBase.exists()) {
+				VeterinarioDataBase.mkdir();
+			}
+		}
+		
 	}
 
 }
