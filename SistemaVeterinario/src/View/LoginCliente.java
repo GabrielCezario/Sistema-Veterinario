@@ -4,6 +4,10 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
+import Controller.ControladorCadastroCliente;
+import Controller.LoginInvalidoException;
+
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.ImageIcon;
@@ -12,6 +16,7 @@ import java.awt.Font;
 import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 
 import java.text.ParseException;
@@ -85,13 +90,20 @@ public class LoginCliente extends JPanel {
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				try {
-					Main.getFrame().setContentPane(new PerfilCliente());
-					Main.getFrame().getContentPane().revalidate();
-				} catch (ParseException e1) {
-					e1.printStackTrace();
-				}
+				String login = txtLogin.getText();
+				String senha = String.valueOf(pswSenha.getPassword());
 				
+				
+				try {
+					
+					ControladorCadastroCliente controladorCadastroCliente = new ControladorCadastroCliente();
+					controladorCadastroCliente.logar(login, senha);
+					
+				} catch (ClassNotFoundException | IOException | LoginInvalidoException e1) {
+					e1.printStackTrace();
+					
+					panelErroLogin.setVisible(true);
+				}
 				
 			}
 		});

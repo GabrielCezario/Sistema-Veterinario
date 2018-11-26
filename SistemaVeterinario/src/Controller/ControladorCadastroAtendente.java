@@ -6,7 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.text.ParseException;
-import java.util.List;
 
 import DAO.AtendenteDAO;
 import Model.Atendente;
@@ -27,10 +26,6 @@ public class ControladorCadastroAtendente {
 			AtendenteDAO.criarAtendente(atendente);
 		}
 
-	}
-
-	public List<Atendente> obterTodosAtendentes() {
-		return null;// AtendenteDAO.listarTodosAtendentes;
 	}
 	
 	public void logar(String login, String senha) throws LoginInvalidoException, FileNotFoundException, ClassNotFoundException, IOException {
@@ -86,7 +81,7 @@ public class ControladorCadastroAtendente {
 					loginInvalidoException = new LoginInvalidoException();
 				}
 				
-				loginInvalidoException.setLoginInvalido(false);
+				loginInvalidoException.setSenhaInvalido(false);
 			}
 			
 		}

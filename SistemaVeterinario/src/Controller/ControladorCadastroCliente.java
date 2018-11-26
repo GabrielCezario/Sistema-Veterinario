@@ -1,9 +1,16 @@
 package Controller;
 
-import java.util.List;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.text.ParseException;
 
 import DAO.ClienteDAO;
 import Model.Cliente;
+import View.Main;
+import View.PerfilCliente;
 
 public class ControladorCadastroCliente {
 
@@ -20,13 +27,70 @@ public class ControladorCadastroCliente {
 		}
 
 	}
-
-	public List<Cliente> obterTodosClientes() {
-		return null;// ClienteDao.listarTodosClientes();
+	
+	public void logar(String login, String senha) throws FileNotFoundException, ClassNotFoundException, IOException, LoginInvalidoException {
+		
+		LoginInvalidoException loginInvalidoException = verificarSenha(login, senha);
+		
+		if (loginInvalidoException != null) {
+			throw loginInvalidoException;
+		} else {
+			
+			try {
+				
+				Main.getFrame().setContentPane(new PerfilCliente());
+				Main.getFrame().getContentPane().revalidate();
+				
+			} catch (ParseException e1) {
+				e1.printStackTrace();
+			}
+			
+		}
+		
 	}
 
 	// =============================================================( METODOS PRIVADOS )===================================================
 
+	private LoginInvalidoException verificarSenha(String login, String senha) throws FileNotFoundException, IOException, ClassNotFoundException {
+		
+		LoginInvalidoException loginInvalidoException = null;
+		File file = new File("DataBase\\ClienteDataBase" + login);
+		
+		if (!file.exists()) {
+			
+			loginInvalidoException = new LoginInvalidoException();
+			loginInvalidoException.setLoginInvalido(true);
+			loginInvalidoException.setSenhaInvalido(true);
+			
+		} else {
+			
+			ObjectInputStream os = new ObjectInputStream(new FileInputStream(file + "\\" + login + ".txt"));
+			Cliente cl = (Cliente) os.readObject();
+			
+			if (!cl.getLogin().trim().equalsIgnoreCase(login)) {
+				if (loginInvalidoException == null) {
+					loginInvalidoException = new LoginInvalidoException();
+				}
+				
+				loginInvalidoException.setLoginInvalido(false);
+			}
+			
+			if (!cl.getSenha().trim().equalsIgnoreCase(senha)) {
+				if (loginInvalidoException == null) {
+					loginInvalidoException = new LoginInvalidoException();
+				}
+				
+				loginInvalidoException.setSenhaInvalido(false);
+			}
+			
+		}
+		
+		return loginInvalidoException;
+	}
+	
+	
+	// =================================================== (METODO PARA VALIDAR O ATENDENTE) ================================================
+	
 	private ClienteInvalidoException validarCliente(Cliente cliente) {
 
 		ClienteInvalidoException clienteInvalidoException = null;

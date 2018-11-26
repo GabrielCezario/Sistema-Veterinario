@@ -105,8 +105,7 @@ public class LoginAtendente extends JPanel {
 					
 					panelErroLogin.setVisible(true);
 				}
-				
-				
+		
 			}
 		});
 		btnEntrar.setBounds(234, 303, 103, 23);

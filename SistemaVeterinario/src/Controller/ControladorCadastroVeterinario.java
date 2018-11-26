@@ -1,7 +1,16 @@
 package Controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.text.ParseException;
+
 import DAO.VeterinarioDAO;
 import Model.Veterinario;
+import View.Main;
+import View.PerfilVeterinario;
 
 public class ControladorCadastroVeterinario {
 	
@@ -19,8 +28,67 @@ public class ControladorCadastroVeterinario {
 		
 	}
 	
+	public void logar(String login, String senha) throws FileNotFoundException, ClassNotFoundException, IOException, LoginInvalidoException {
+		
+		LoginInvalidoException loginInvalidoException = verificarSenha(login, senha);
+		
+		if (loginInvalidoException != null) {
+			throw loginInvalidoException;
+		} else {
+
+			try {
+				
+				Main.getFrame().setContentPane(new PerfilVeterinario());
+				Main.getFrame().getContentPane().revalidate();
+				
+			} catch (ParseException e1) {
+				e1.printStackTrace();
+			}
+			
+		}
+		
+	}
+	
 	
 	// =============================================================( METODOS PRIVADOS )===================================================
+	
+	private LoginInvalidoException verificarSenha(String login, String senha) throws FileNotFoundException, IOException, ClassNotFoundException {
+		
+		LoginInvalidoException loginInvalidoException = null;
+		File file = new File("DataBase\\VeterinarioDataBase\\" + login);
+		
+		if (!file.exists()) {
+			
+			loginInvalidoException = new LoginInvalidoException();
+			loginInvalidoException.setLoginInvalido(true);
+			loginInvalidoException.setSenhaInvalido(true);
+			
+		} else {
+			
+			ObjectInputStream os = new ObjectInputStream(new FileInputStream(file + "\\" + login + ".txt"));
+			Veterinario veterinario = (Veterinario) os.readObject(); 
+			
+			if (!veterinario.getLogin().trim().equalsIgnoreCase(login)) {
+				if (loginInvalidoException == null) {
+					loginInvalidoException = new LoginInvalidoException();
+				}
+				
+				loginInvalidoException.setLoginInvalido(false);
+			}
+			
+			if (!veterinario.getSenha().trim().equalsIgnoreCase(senha)) {
+				if (loginInvalidoException == null) {
+					loginInvalidoException = new LoginInvalidoException();
+				}
+				
+				loginInvalidoException.setSenhaInvalido(false);
+			}
+		}
+		
+		return loginInvalidoException;
+	}
+	
+	// =================================================== ( METODO PARA VERIFICAR A SENHA ) ==============================================
 	
 	private VeterinarioInvalidoException validarVeterinario(Veterinario veterinario) {
 		
