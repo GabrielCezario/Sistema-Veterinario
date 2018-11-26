@@ -4,6 +4,11 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
+import Controller.ControladorCadastroAtendente;
+import Controller.LoginInvalidoException;
+import Model.Atendente;
+
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.ImageIcon;
@@ -12,6 +17,8 @@ import java.awt.Font;
 import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 
 import java.text.ParseException;
@@ -84,12 +91,23 @@ public class LoginAtendente extends JPanel {
 		JButton btnEntrar = new JButton("Entrar");
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
+				String login = txtLogin.getText();
+				
+				String senha = pswSenha.getText();
+				
+				//String senha = String.valueOf();
+				
 				
 				try {
-					Main.getFrame().setContentPane(new PerfilAtendente());
-					Main.getFrame().getContentPane().revalidate();
-				} catch (ParseException e1) {
-					e1.printStackTrace();
+					
+					ControladorCadastroAtendente controladorCadastroAtendente = new ControladorCadastroAtendente();
+					controladorCadastroAtendente.logar(login, senha);
+					
+				} catch (ClassNotFoundException | LoginInvalidoException | IOException e2) {
+					e2.printStackTrace();
+					
+					panelErroLogin.setVisible(true);
 				}
 				
 				

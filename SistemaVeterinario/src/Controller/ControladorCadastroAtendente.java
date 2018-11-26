@@ -1,9 +1,17 @@
 package Controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.text.ParseException;
 import java.util.List;
 
 import DAO.AtendenteDAO;
 import Model.Atendente;
+import View.Main;
+import View.PerfilAtendente;
 
 public class ControladorCadastroAtendente {
 
@@ -24,9 +32,97 @@ public class ControladorCadastroAtendente {
 	public List<Atendente> obterTodosAtendentes() {
 		return null;// AtendenteDAO.listarTodosAtendentes;
 	}
+	
+	
+	
+	public void logar(String login, String senha) throws LoginInvalidoException, FileNotFoundException, ClassNotFoundException, IOException {
+		
+		LoginInvalidoException loginInvalidoException = verificarSenha(login, senha);
+		
+		if (loginInvalidoException != null) {
+			
+			throw loginInvalidoException;
+
+		} else {
+			
+			try {
+				
+				Main.getFrame().setContentPane(new PerfilAtendente());
+				Main.getFrame().getContentPane().revalidate();
+				
+			} catch (ParseException e1) {
+				e1.printStackTrace();			
+			}
+			
+		}
+		
+	}
 
 	// ============================================================( METODOS PRIVADOS )===============================================================
 
+	// =================================================== (METODO PARA VERIFICAR A SENHA) ================================================
+	
+	private LoginInvalidoException verificarSenha(String login, String senha) throws FileNotFoundException, IOException, ClassNotFoundException {
+
+		LoginInvalidoException loginInvalidoException = null;
+		
+		File file = new File("DataBase\\AtendenteDataBase\\" + login);
+		
+		ObjectInputStream os = new ObjectInputStream(new FileInputStream(file + "\\" + login + ".txt"));
+		Atendente at = (Atendente) os.readObject(); 
+		
+		if (at.getLogin().trim().equalsIgnoreCase(login)) {
+			if (loginInvalidoException == null) {
+				loginInvalidoException = new LoginInvalidoException();
+			}
+				
+			loginInvalidoException.setLoginInvalido(false);
+				
+		}
+		
+		if (at.getSenha().trim().equalsIgnoreCase(senha)) {
+			if (loginInvalidoException == null) {
+				loginInvalidoException = new LoginInvalidoException();
+			}
+			
+			loginInvalidoException.setLoginInvalido(false);
+			
+		}
+		
+		if (!file.exists()) {
+			
+			loginInvalidoException = new LoginInvalidoException();
+			loginInvalidoException.setLoginInvalido(true);
+			loginInvalidoException.setSenhaInvalido(true);
+			
+		}
+		
+		/*if (at.getLogin().trim().equalsIgnoreCase(login) && at.getSenha().trim().equalsIgnoreCase(senha)) {
+				if (loginInvalidoException == null) {
+					loginInvalidoException = new LoginInvalidoException();
+				}
+				
+				loginInvalidoException.setLoginInvalido(false);
+			
+			
+				if (loginInvalidoException == null) {
+					loginInvalidoException = new LoginInvalidoException();
+				}
+				
+				loginInvalidoException.setLoginInvalido(false);
+			} else if(!file.exists()){
+			
+			loginInvalidoException = new LoginInvalidoException();
+			loginInvalidoException.setLoginInvalido(true);
+			loginInvalidoException.setSenhaInvalido(true);	
+			
+		}*/
+		
+		return loginInvalidoException;
+	}
+	
+	// =================================================== (METODO PARA VALIDAR O ATENDENTE) ================================================
+	
 	private AtendenteInvalidoException validarAtendente(Atendente atendente) {
 		
 		AtendenteInvalidoException atendenteInvalidoException = null;
