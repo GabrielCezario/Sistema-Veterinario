@@ -33,16 +33,12 @@ public class ControladorCadastroAtendente {
 		return null;// AtendenteDAO.listarTodosAtendentes;
 	}
 	
-	
-	
 	public void logar(String login, String senha) throws LoginInvalidoException, FileNotFoundException, ClassNotFoundException, IOException {
 		
 		LoginInvalidoException loginInvalidoException = verificarSenha(login, senha);
 		
 		if (loginInvalidoException != null) {
-			
 			throw loginInvalidoException;
-
 		} else {
 			
 			try {
@@ -55,39 +51,16 @@ public class ControladorCadastroAtendente {
 			}
 			
 		}
-		
 	}
 
-	// ============================================================( METODOS PRIVADOS )===============================================================
+	// ======================================================== ( METODOS PRIVADOS ) ======================================================
 
-	// =================================================== (METODO PARA VERIFICAR A SENHA) ================================================
+	// =================================================== ( METODO PARA VERIFICAR A SENHA ) ==============================================
 	
 	private LoginInvalidoException verificarSenha(String login, String senha) throws FileNotFoundException, IOException, ClassNotFoundException {
 
 		LoginInvalidoException loginInvalidoException = null;
-		
 		File file = new File("DataBase\\AtendenteDataBase\\" + login);
-		
-		ObjectInputStream os = new ObjectInputStream(new FileInputStream(file + "\\" + login + ".txt"));
-		Atendente at = (Atendente) os.readObject(); 
-		
-		if (at.getLogin().trim().equalsIgnoreCase(login)) {
-			if (loginInvalidoException == null) {
-				loginInvalidoException = new LoginInvalidoException();
-			}
-				
-			loginInvalidoException.setLoginInvalido(false);
-				
-		}
-		
-		if (at.getSenha().trim().equalsIgnoreCase(senha)) {
-			if (loginInvalidoException == null) {
-				loginInvalidoException = new LoginInvalidoException();
-			}
-			
-			loginInvalidoException.setLoginInvalido(false);
-			
-		}
 		
 		if (!file.exists()) {
 			
@@ -95,28 +68,28 @@ public class ControladorCadastroAtendente {
 			loginInvalidoException.setLoginInvalido(true);
 			loginInvalidoException.setSenhaInvalido(true);
 			
+		} else {
+			
+			ObjectInputStream os = new ObjectInputStream(new FileInputStream(file + "\\" + login + ".txt"));
+			Atendente at = (Atendente) os.readObject();
+			
+			if (!at.getLogin().trim().equalsIgnoreCase(login)) {
+				if (loginInvalidoException == null) {
+					loginInvalidoException = new LoginInvalidoException();
+				}
+					
+				loginInvalidoException.setLoginInvalido(false);
+			}
+			
+			if (!at.getSenha().trim().equalsIgnoreCase(senha)) {
+				if (loginInvalidoException == null) {
+					loginInvalidoException = new LoginInvalidoException();
+				}
+				
+				loginInvalidoException.setLoginInvalido(false);
+			}
+			
 		}
-		
-		/*if (at.getLogin().trim().equalsIgnoreCase(login) && at.getSenha().trim().equalsIgnoreCase(senha)) {
-				if (loginInvalidoException == null) {
-					loginInvalidoException = new LoginInvalidoException();
-				}
-				
-				loginInvalidoException.setLoginInvalido(false);
-			
-			
-				if (loginInvalidoException == null) {
-					loginInvalidoException = new LoginInvalidoException();
-				}
-				
-				loginInvalidoException.setLoginInvalido(false);
-			} else if(!file.exists()){
-			
-			loginInvalidoException = new LoginInvalidoException();
-			loginInvalidoException.setLoginInvalido(true);
-			loginInvalidoException.setSenhaInvalido(true);	
-			
-		}*/
 		
 		return loginInvalidoException;
 	}

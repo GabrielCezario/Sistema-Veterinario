@@ -93,11 +93,7 @@ public class LoginAtendente extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 
 				String login = txtLogin.getText();
-				
-				String senha = pswSenha.getText();
-				
-				//String senha = String.valueOf();
-				
+				String senha = String.valueOf(pswSenha.getPassword());
 				
 				try {
 					
