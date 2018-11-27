@@ -11,10 +11,18 @@ import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 import javax.swing.text.MaskFormatter;
+
+import Controller.ControladorCadastroCliente;
+import Model.Cliente;
+
 import javax.swing.JFormattedTextField;
 import javax.swing.JEditorPane;
 import javax.swing.JComboBox;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.text.ParseException;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
@@ -34,7 +42,7 @@ public class PerfilCliente extends JPanel {
 	private JTable tblHistorico;
 
 
-	public PerfilCliente() throws ParseException {
+	public PerfilCliente() throws ParseException, FileNotFoundException, IOException, ClassNotFoundException {
 		setLayout(null);
 		
 		JButton btnVoltar = new JButton("Voltar");
@@ -48,6 +56,9 @@ public class PerfilCliente extends JPanel {
 		});
 		btnVoltar.setBounds(10, 446, 89, 23);
 		add(btnVoltar);
+		
+		ObjectInputStream os = new ObjectInputStream(new FileInputStream("DataBase\\ClienteDataBase\\" + ControladorCadastroCliente.aux + "\\" + ControladorCadastroCliente.aux + ".txt"));
+		Cliente cliente = (Cliente) os.readObject();
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(135, 206, 235));
@@ -78,6 +89,7 @@ public class PerfilCliente extends JPanel {
 		txtNome.setBounds(118, 11, 512, 20);
 		panelDados.add(txtNome);
 		
+		txtNome.setText(cliente.getNome());
 		txtNome.setEditable(false);
 		
 		JLabel label_1 = new JLabel("Telefone");
@@ -94,6 +106,7 @@ public class PerfilCliente extends JPanel {
 		MaskFormatter maskTelefone = new MaskFormatter("(##)#####-####");
 		maskTelefone.install(formattedTextFieldTelefone);
 		
+		formattedTextFieldTelefone.setText(cliente.getTelefone());
 		formattedTextFieldTelefone.setEditable(false);
 		
 		JLabel label_2 = new JLabel("Data de Nascimento");
@@ -110,6 +123,7 @@ public class PerfilCliente extends JPanel {
 		MaskFormatter maskDtNascimento = new MaskFormatter("##/##/####");
 		maskDtNascimento.install(formattedTextFieldDtNascimento);
 		
+		formattedTextFieldDtNascimento.setText(cliente.getDtNascimento());
 		formattedTextFieldDtNascimento.setEditable(false);
 		
 		JLabel label_3 = new JLabel("Sexo");
@@ -123,6 +137,7 @@ public class PerfilCliente extends JPanel {
 		txtSexo.setBounds(518, 36, 112, 20);
 		panelDados.add(txtSexo);
 		
+		txtSexo.setText(cliente.getSexo());
 		txtSexo.setEditable(false);
 		
 		JLabel label_4 = new JLabel("RG");
@@ -139,6 +154,7 @@ public class PerfilCliente extends JPanel {
 		MaskFormatter maskRG = new MaskFormatter("#.###.###");
 		maskRG.install(formattedTextFieldRG);
 		
+		formattedTextFieldRG.setText(cliente.getRg());
 		formattedTextFieldRG.setEditable(false);
 		
 		JLabel label_5 = new JLabel("CPF");
@@ -155,6 +171,7 @@ public class PerfilCliente extends JPanel {
 		MaskFormatter maskCPF = new MaskFormatter("###.###.###-##");
 		maskCPF.install(formattedTextField_CPF);
 		
+		formattedTextField_CPF.setText(cliente.getCpf());
 		formattedTextField_CPF.setEditable(false);
 		
 		JLabel label_6 = new JLabel("Email");
@@ -168,6 +185,7 @@ public class PerfilCliente extends JPanel {
 		txtEmail.setBounds(54, 61, 250, 20);
 		panelDados.add(txtEmail);
 		
+		txtEmail.setText(cliente.getEmail());
 		txtEmail.setEditable(false);
 		
 		JLabel label_7 = new JLabel("Nome de Usu\u00E1rio");
@@ -181,6 +199,7 @@ public class PerfilCliente extends JPanel {
 		txtNomeUsuario.setBounds(123, 88, 207, 20);
 		panelDados.add(txtNomeUsuario);
 		
+		txtNomeUsuario.setText(cliente.getLogin());
 		txtNomeUsuario.setEditable(false);
 		
 		JLabel label_8 = new JLabel("Senha");
@@ -194,6 +213,7 @@ public class PerfilCliente extends JPanel {
 		txtSenha.setBounds(384, 88, 246, 20);
 		panelDados.add(txtSenha);
 		
+		txtSenha.setText(cliente.getSenha());
 		txtSenha.setEditable(false);
 		
 		JLabel label_9 = new JLabel("Endere\u00E7o");
@@ -206,6 +226,7 @@ public class PerfilCliente extends JPanel {
 		editorPaneEndereco.setBounds(10, 140, 505, 73);
 		panelDados.add(editorPaneEndereco);
 		
+		editorPaneEndereco.setText(cliente.getEndereco());
 		editorPaneEndereco.setEditable(false);
 		
 		JButton btnEditar = new JButton("Editar");

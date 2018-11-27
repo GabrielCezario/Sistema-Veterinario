@@ -9,10 +9,13 @@ import java.text.ParseException;
 
 import DAO.ClienteDAO;
 import Model.Cliente;
+import View.LoginCliente;
 import View.Main;
 import View.PerfilCliente;
 
 public class ControladorCadastroCliente {
+	
+	public static String aux;
 
 	// =============================================================( METODOS PUBLICOS )===================================================
 
@@ -26,6 +29,13 @@ public class ControladorCadastroCliente {
 			ClienteDAO.criarCliente(cliente);
 		}
 
+	}
+	
+	public void apagarCliente(Cliente cliente) throws FileNotFoundException, IOException {
+		ClienteDAO.deletarCliente(cliente);
+		
+		Main.getFrame().setContentPane(new LoginCliente());
+		Main.getFrame().getContentPane().revalidate();
 	}
 	
 	public void logar(String login, String senha) throws FileNotFoundException, ClassNotFoundException, IOException, LoginInvalidoException {
@@ -65,9 +75,11 @@ public class ControladorCadastroCliente {
 		} else {
 			
 			ObjectInputStream os = new ObjectInputStream(new FileInputStream(file + "\\" + login + ".txt"));
-			Cliente cl = (Cliente) os.readObject();
+			Cliente cliente = (Cliente) os.readObject();
 			
-			if (!cl.getLogin().trim().equalsIgnoreCase(login)) {
+			aux = login;
+			
+			if (!cliente.getLogin().trim().equalsIgnoreCase(login)) {
 				if (loginInvalidoException == null) {
 					loginInvalidoException = new LoginInvalidoException();
 				}
@@ -75,7 +87,7 @@ public class ControladorCadastroCliente {
 				loginInvalidoException.setLoginInvalido(false);
 			}
 			
-			if (!cl.getSenha().trim().equalsIgnoreCase(senha)) {
+			if (!cliente.getSenha().trim().equalsIgnoreCase(senha)) {
 				if (loginInvalidoException == null) {
 					loginInvalidoException = new LoginInvalidoException();
 				}

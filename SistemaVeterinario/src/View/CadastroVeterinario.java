@@ -20,6 +20,8 @@ import javax.swing.JLayeredPane;
 import javax.swing.JFormattedTextField;
 import javax.swing.JEditorPane;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.ParseException;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
@@ -194,6 +196,15 @@ public class CadastroVeterinario extends JPanel {
 					Main.getFrame().setContentPane(new PerfilAtendente());
 					Main.getFrame().getContentPane().revalidate();
 				} catch (ParseException e1) {
+					e1.printStackTrace();
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				

@@ -100,7 +100,8 @@ public class LoginAtendente extends JPanel {
 					ControladorCadastroAtendente controladorCadastroAtendente = new ControladorCadastroAtendente();
 					controladorCadastroAtendente.logar(login, senha);
 					
-				} catch (ClassNotFoundException | LoginInvalidoException | IOException e2) {
+				} catch (ClassNotFoundException | LoginInvalidoException | IOException e2) {	
+					
 					e2.printStackTrace();
 					
 					panelErroLogin.setVisible(true);

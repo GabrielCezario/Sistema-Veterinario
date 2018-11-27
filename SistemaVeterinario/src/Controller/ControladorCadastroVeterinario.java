@@ -9,10 +9,13 @@ import java.text.ParseException;
 
 import DAO.VeterinarioDAO;
 import Model.Veterinario;
+import View.LoginVeterinario;
 import View.Main;
 import View.PerfilVeterinario;
 
 public class ControladorCadastroVeterinario {
+	
+	public static String aux;
 	
 	// =============================================================( METODOS PUBLICOS )===================================================
 	
@@ -26,6 +29,13 @@ public class ControladorCadastroVeterinario {
 			VeterinarioDAO.criarVeterinario(veterinario);
 		}
 		
+	}
+	
+	public void apagarVeterinario(Veterinario veterinario) {
+		VeterinarioDAO.deletarVeterinario(veterinario);
+		
+		Main.getFrame().setContentPane(new LoginVeterinario());
+		Main.getFrame().getContentPane().revalidate();
 	}
 	
 	public void logar(String login, String senha) throws FileNotFoundException, ClassNotFoundException, IOException, LoginInvalidoException {
@@ -67,6 +77,8 @@ public class ControladorCadastroVeterinario {
 			
 			ObjectInputStream os = new ObjectInputStream(new FileInputStream(file + "\\" + login + ".txt"));
 			Veterinario veterinario = (Veterinario) os.readObject(); 
+			
+			aux = login;
 			
 			if (!veterinario.getLogin().trim().equalsIgnoreCase(login)) {
 				if (loginInvalidoException == null) {

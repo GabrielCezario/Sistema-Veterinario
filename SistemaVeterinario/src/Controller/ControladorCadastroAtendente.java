@@ -5,14 +5,18 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.text.ParseException;
 
 import DAO.AtendenteDAO;
 import Model.Atendente;
-import View.Main;
 import View.PerfilAtendente;
+import View.LoginAtendente;
+import View.Main;
 
 public class ControladorCadastroAtendente {
+	
+	public static String aux;
 
 	// ============================================================( METODOS PUBLICOS )===============================================================
 
@@ -47,6 +51,14 @@ public class ControladorCadastroAtendente {
 			
 		}
 	}
+	
+	public void apagarAtendente(Atendente atendente) throws FileNotFoundException, IOException{ 
+		
+		AtendenteDAO.deletarAtendente(atendente);
+		
+		Main.getFrame().setContentPane(new LoginAtendente());
+		Main.getFrame().getContentPane().revalidate();
+	}
 
 	// ======================================================== ( METODOS PRIVADOS ) ======================================================
 
@@ -66,9 +78,11 @@ public class ControladorCadastroAtendente {
 		} else {
 			
 			ObjectInputStream os = new ObjectInputStream(new FileInputStream(file + "\\" + login + ".txt"));
-			Atendente at = (Atendente) os.readObject();
+			Atendente atendente = (Atendente) os.readObject();
 			
-			if (!at.getLogin().trim().equalsIgnoreCase(login)) {
+			aux = login;
+			
+			if (!atendente.getLogin().trim().equalsIgnoreCase(login)) {
 				if (loginInvalidoException == null) {
 					loginInvalidoException = new LoginInvalidoException();
 				}
@@ -76,7 +90,7 @@ public class ControladorCadastroAtendente {
 				loginInvalidoException.setLoginInvalido(false);
 			}
 			
-			if (!at.getSenha().trim().equalsIgnoreCase(senha)) {
+			if (!atendente.getSenha().trim().equalsIgnoreCase(senha)) {
 				if (loginInvalidoException == null) {
 					loginInvalidoException = new LoginInvalidoException();
 				}

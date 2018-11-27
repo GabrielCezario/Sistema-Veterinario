@@ -11,10 +11,18 @@ import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 import javax.swing.text.MaskFormatter;
+
+import Controller.ControladorCadastroAtendente;
+import Model.Atendente;
+
 import javax.swing.JFormattedTextField;
 import javax.swing.JEditorPane;
 import javax.swing.JComboBox;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.text.ParseException;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
@@ -40,7 +48,7 @@ public class PerfilAtendente extends JPanel {
 	private JTable table;
 	private JTable tblConsultasCriadas;
 
-	public PerfilAtendente() throws ParseException {
+	public PerfilAtendente() throws ParseException, FileNotFoundException, IOException, ClassNotFoundException {
 		setLayout(null);
 		
 		JButton btnVoltar = new JButton("Voltar");
@@ -53,7 +61,10 @@ public class PerfilAtendente extends JPanel {
 			}
 		});
 		btnVoltar.setBounds(10, 446, 89, 23);
-		add(btnVoltar);
+		add(btnVoltar);		
+		
+		ObjectInputStream os = new ObjectInputStream(new FileInputStream("DataBase\\AtendenteDataBase\\" + ControladorCadastroAtendente.aux + "\\" + ControladorCadastroAtendente.aux + ".txt"));
+		Atendente atendente = (Atendente) os.readObject();
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(135, 206, 235));
@@ -84,6 +95,7 @@ public class PerfilAtendente extends JPanel {
 		txtNome.setBounds(118, 11, 512, 20);
 		panelDados.add(txtNome);
 		
+		txtNome.setText(atendente.getNome());
 		txtNome.setEditable(false);
 		
 		JLabel lblTelefone = new JLabel("Telefone");
@@ -100,6 +112,7 @@ public class PerfilAtendente extends JPanel {
 		MaskFormatter maskTelefone = new MaskFormatter("(##)#####-####");
 		maskTelefone.install(ftfTelefone);
 		
+		ftfTelefone.setText(atendente.getTelefone());
 		ftfTelefone.setEditable(false);
 		
 		JLabel lblDtNascimento = new JLabel("Data de Nascimento");
@@ -116,6 +129,7 @@ public class PerfilAtendente extends JPanel {
 		MaskFormatter maskDtNascimento = new MaskFormatter("##/##/####");
 		maskDtNascimento.install(ftfDtNascimento);
 		
+		ftfDtNascimento.setText(atendente.getDtNascimento());
 		ftfDtNascimento.setEditable(false);
 		
 		JLabel lblSexo = new JLabel("Sexo");
@@ -129,6 +143,7 @@ public class PerfilAtendente extends JPanel {
 		txtSexo.setBounds(518, 36, 112, 20);
 		panelDados.add(txtSexo);
 		
+		txtSexo.setText(atendente.getSexo());
 		txtSexo.setEditable(false);
 		
 		JLabel lblRG = new JLabel("RG");
@@ -145,6 +160,7 @@ public class PerfilAtendente extends JPanel {
 		MaskFormatter maskRG = new MaskFormatter("#.###.###");
 		maskRG.install(ftfRG);
 		
+		ftfRG.setText(atendente.getRg());
 		ftfRG.setEditable(false);
 		
 		JLabel lblCPF = new JLabel("CPF");
@@ -161,6 +177,7 @@ public class PerfilAtendente extends JPanel {
 		MaskFormatter maskCPF = new MaskFormatter("###.###.###-##");
 		maskCPF.install(formattedTextField_CPF);
 		
+		formattedTextField_CPF.setText(atendente.getCpf());
 		formattedTextField_CPF.setEditable(false);
 		
 		JLabel lblEmail = new JLabel("Email");
@@ -174,6 +191,7 @@ public class PerfilAtendente extends JPanel {
 		txtEmail.setBounds(54, 61, 250, 20);
 		panelDados.add(txtEmail);
 		
+		txtEmail.setText(atendente.getEmail());
 		txtEmail.setEditable(false);
 		
 		JLabel lblNomeUsuario = new JLabel("Nome de Usu\u00E1rio");
@@ -187,6 +205,7 @@ public class PerfilAtendente extends JPanel {
 		txtNomeUsuario.setBounds(123, 88, 207, 20);
 		panelDados.add(txtNomeUsuario);
 		
+		txtNomeUsuario.setText(atendente.getLogin());
 		txtNomeUsuario.setEditable(false);
 		
 		JLabel lblSenha = new JLabel("Senha");
@@ -200,6 +219,7 @@ public class PerfilAtendente extends JPanel {
 		txtSenha.setBounds(384, 88, 246, 20);
 		panelDados.add(txtSenha);
 		
+		txtSenha.setText(atendente.getSenha());
 		txtSenha.setEditable(false);
 		
 		JLabel lblEndereco = new JLabel("Endere\u00E7o");
@@ -212,9 +232,23 @@ public class PerfilAtendente extends JPanel {
 		editorPaneEndereco.setBounds(10, 140, 505, 73);
 		panelDados.add(editorPaneEndereco);
 		
+		editorPaneEndereco.setText(atendente.getEndereco());
 		editorPaneEndereco.setEditable(false);
 		
 		JButton btnEcluirConta = new JButton("Excluir Conta");
+		btnEcluirConta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				try {
+					
+					ControladorCadastroAtendente controladorCadastroAtendente = new ControladorCadastroAtendente();
+					controladorCadastroAtendente.apagarAtendente(atendente);
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 		btnEcluirConta.setForeground(Color.RED);
 		btnEcluirConta.setBackground(Color.WHITE);
 		btnEcluirConta.setBounds(535, 122, 95, 23);

@@ -11,10 +11,19 @@ import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 import javax.swing.text.MaskFormatter;
+
+import Controller.ControladorCadastroAtendente;
+import Controller.ControladorCadastroVeterinario;
+import Model.Veterinario;
+
 import javax.swing.JFormattedTextField;
 import javax.swing.JEditorPane;
 import javax.swing.JComboBox;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.text.ParseException;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
@@ -36,7 +45,7 @@ public class PerfilVeterinario extends JPanel {
 	private JTextField txtSenha;
 	private JTable table;
 
-	public PerfilVeterinario() throws ParseException {
+	public PerfilVeterinario() throws ParseException, FileNotFoundException, IOException, ClassNotFoundException {
 		setLayout(null);
 		
 		JButton btnVoltar = new JButton("Voltar");
@@ -49,6 +58,9 @@ public class PerfilVeterinario extends JPanel {
 		});
 		btnVoltar.setBounds(10, 446, 89, 23);
 		add(btnVoltar);
+		
+		ObjectInputStream os = new ObjectInputStream(new FileInputStream("DataBase\\VeterinarioDataBase\\" + ControladorCadastroVeterinario.aux + "\\" + ControladorCadastroVeterinario.aux + ".txt"));
+		Veterinario veterinario = (Veterinario) os.readObject();
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(135, 206, 235));
@@ -79,6 +91,7 @@ public class PerfilVeterinario extends JPanel {
 		txtNome.setBounds(118, 11, 512, 20);
 		panelDados.add(txtNome);
 		
+		txtNome.setText(veterinario.getNome());
 		txtNome.setEditable(false);
 		
 		JLabel lblTelefone = new JLabel("Telefone");
@@ -95,6 +108,7 @@ public class PerfilVeterinario extends JPanel {
 		MaskFormatter maskTelefone = new MaskFormatter("(##)#####-####");
 		maskTelefone.install(ftfTelefone);
 		
+		ftfTelefone.setText(veterinario.getTelefone());
 		ftfTelefone.setEditable(false);
 		
 		JLabel lblDtNascimento = new JLabel("Data de Nascimento");
@@ -111,6 +125,7 @@ public class PerfilVeterinario extends JPanel {
 		MaskFormatter maskDtNascimento = new MaskFormatter("##/##/####");
 		maskDtNascimento.install(ftfDtNascimento);
 		
+		ftfDtNascimento.setText(veterinario.getDtNascimento());
 		ftfDtNascimento.setEditable(false);
 		
 		JLabel lblSexo = new JLabel("Sexo");
@@ -124,6 +139,7 @@ public class PerfilVeterinario extends JPanel {
 		txtSexo.setBounds(518, 36, 112, 20);
 		panelDados.add(txtSexo);
 		
+		txtSexo.setText(veterinario.getSexo());
 		txtSexo.setEditable(false);
 		
 		JLabel lblEmail = new JLabel("Email");
@@ -137,6 +153,7 @@ public class PerfilVeterinario extends JPanel {
 		txtEmail.setBounds(54, 61, 250, 20);
 		panelDados.add(txtEmail);
 		
+		txtEmail.setText(veterinario.getEmail());
 		txtEmail.setEditable(false);
 		
 		JLabel lblCPF = new JLabel("CPF");
@@ -153,6 +170,7 @@ public class PerfilVeterinario extends JPanel {
 		MaskFormatter maskCPF = new MaskFormatter("###.###.###-##");
 		maskCPF.install(ftfCPF);
 		
+		ftfCPF.setText(veterinario.getCpf());
 		ftfCPF.setEditable(false);
 		
 		JLabel lblRG = new JLabel("RG");
@@ -169,6 +187,7 @@ public class PerfilVeterinario extends JPanel {
 		MaskFormatter maskRG = new MaskFormatter("#.###.###");
 		maskRG.install(ftfRG);
 		
+		ftfRG.setText(veterinario.getRg());
 		ftfRG.setEditable(false);
 		
 		JLabel lblNomeUsuario = new JLabel("Nome de Usu\u00E1rio");
@@ -182,6 +201,7 @@ public class PerfilVeterinario extends JPanel {
 		txtNomeUsuario.setBounds(123, 88, 207, 20);
 		panelDados.add(txtNomeUsuario);
 		
+		txtNomeUsuario.setText(veterinario.getLogin());
 		txtNomeUsuario.setEditable(false);
 		
 		JLabel lblSenha = new JLabel("Senha");
@@ -195,6 +215,7 @@ public class PerfilVeterinario extends JPanel {
 		txtSenha.setBounds(384, 88, 246, 20);
 		panelDados.add(txtSenha);
 		
+		txtSenha.setText(veterinario.getSenha());
 		txtSenha.setEditable(false);
 		
 		JLabel lblEndereco = new JLabel("Endere\u00E7o");
@@ -207,6 +228,7 @@ public class PerfilVeterinario extends JPanel {
 		editorPaneEndereco.setBounds(10, 140, 505, 73);
 		panelDados.add(editorPaneEndereco);
 		
+		editorPaneEndereco.setText(veterinario.getEndereco());
 		editorPaneEndereco.setEditable(false);
 		
 		JButton btnEcluirConta = new JButton("Excluir Conta");

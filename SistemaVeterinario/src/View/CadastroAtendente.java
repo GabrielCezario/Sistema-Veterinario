@@ -214,6 +214,7 @@ public class CadastroAtendente extends JPanel{
 			public void actionPerformed(ActionEvent arg0) {
 				
 				Atendente atendente = new Atendente();
+				String senha = String.valueOf(passwordFieldSenha.getPassword());
 				
 				atendente.setNome(txtNome.getText());
 				atendente.setSexo(txtSexo.getText());
@@ -225,7 +226,7 @@ public class CadastroAtendente extends JPanel{
 				atendente.setRg(ftfRG.getText());
 				atendente.setCpf(ftfCPF.getText());
 				
-				atendente.setSenha(passwordFieldSenha.getText());
+				atendente.setSenha(senha);
 				atendente.setEndereco(editorPaneEndereco.getText());
 				
 				try {
