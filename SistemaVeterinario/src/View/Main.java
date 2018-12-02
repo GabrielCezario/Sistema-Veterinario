@@ -77,6 +77,12 @@ public class Main {
 		File AtendenteDataBase = new File("DataBase\\AtendenteDataBase");
 		File VeterinarioDataBase = new File("DataBase\\VeterinarioDataBase");
 		
+		File TodosOsClientesDataBase = new File("DataBase\\AtendenteDataBase\\TodosOsClientesDataBase");
+		File TodosOsVeterinariosDataBase = new File("DataBase\\AtendenteDataBase\\TodosOsVeterinariosDataBase");
+		
+		File Consultas = new File("DataBase\\AtendenteDataBase\\Consultas");
+		File Agendamentos = new File("DataBase\\AtendenteDataBase\\Agendamentos");
+		
 		if (!DataBase.exists()) {
 			DataBase.mkdir();
 			
@@ -86,11 +92,29 @@ public class Main {
 			
 			if (!AtendenteDataBase.exists()) {
 				AtendenteDataBase.mkdir();
+				
+				if (!TodosOsClientesDataBase.exists()) {
+					TodosOsClientesDataBase.mkdir();
+				}
+				
+				if (!TodosOsVeterinariosDataBase.exists()) {
+					TodosOsVeterinariosDataBase.mkdir();
+				}
+				
+				if (!Consultas.exists()) {
+					Consultas.mkdir();
+				}
+				
+				if (!Agendamentos.exists()) {
+					Agendamentos.mkdir();
+				}
+				
 			}
 			
 			if (!VeterinarioDataBase.exists()) {
 				VeterinarioDataBase.mkdir();
 			}
+
 		}
 		
 	}

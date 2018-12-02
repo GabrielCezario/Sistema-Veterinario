@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.text.MaskFormatter;
 
+import Controller.ClienteInvalidoException;
 import Controller.ControladorCadastroVeterinario;
 import Controller.VeterinarioInvalidoException;
 import Model.Veterinario;
@@ -154,11 +155,11 @@ public class CadastroVeterinario extends JPanel {
 		
 		txtNomeUsuario = new JTextField();
 		txtNomeUsuario.setColumns(10);
-		txtNomeUsuario.setBounds(123, 234, 207, 20);
+		txtNomeUsuario.setBounds(123, 234, 507, 20);
 		add(txtNomeUsuario);
 		
 		passwordFieldSenha = new JPasswordField();
-		passwordFieldSenha.setBounds(54, 259, 276, 20);
+		passwordFieldSenha.setBounds(54, 259, 576, 20);
 		add(passwordFieldSenha);
 		
 		JLabel lblSenha = new JLabel("Senha");
@@ -185,7 +186,7 @@ public class CadastroVeterinario extends JPanel {
 		
 		txtEspecialidade = new JTextField();
 		txtEspecialidade.setColumns(10);
-		txtEspecialidade.setBounds(104, 156, 200, 20);
+		txtEspecialidade.setBounds(104, 156, 526, 20);
 		add(txtEspecialidade);
 		
 		JButton btnVoltar = new JButton("Voltar");
@@ -275,6 +276,7 @@ public class CadastroVeterinario extends JPanel {
 					txtSexo.setText("");
 					txtEmail.setText("");
 					txtNomeUsuario.setText("");
+					txtEspecialidade.setText("");
 					
 					//Formatted Text Field
 					ftfTelefone.setText("");
@@ -289,11 +291,54 @@ public class CadastroVeterinario extends JPanel {
 					editorPaneEndereco.setText("");
 					
 				} catch (VeterinarioInvalidoException e1) {
-					e1.printStackTrace();
 					
 					JDialogUsuarioNaoCriado jDialogUsuarioNaoCriado = new JDialogUsuarioNaoCriado();
 					jDialogUsuarioNaoCriado.setVisible(true);
 					jDialogUsuarioNaoCriado.setLocationRelativeTo(null);
+					
+					if (txtNome == null || txtNome.getText().isEmpty()) {
+						lblNome.setForeground(Color.RED);
+					}
+					
+					if (txtEmail == null || txtEmail.getText().isEmpty()) {
+						lblEmail.setForeground(Color.RED);
+					}
+					
+					if (txtNomeUsuario == null || txtNomeUsuario.getText().isEmpty()) {
+						lblNomeUsuario.setForeground(Color.RED);
+					}
+					
+					if (txtSexo == null || txtSexo.getText().isEmpty()) {
+						lblSexo.setForeground(Color.RED);
+					}
+					
+					if (txtEspecialidade == null || txtEspecialidade.getText().isEmpty()) {
+						lblEspecialidade.setForeground(Color.RED);
+					}
+					
+					if (ftfCPF == null || ftfCPF.getText().isEmpty()) {
+						lblCPF.setForeground(Color.RED);
+					}
+					
+					if (ftfDtNascimento == null || ftfDtNascimento.getText().isEmpty()) {
+						lblDataNascimento.setForeground(Color.RED);
+					}
+					
+					if (ftfRG == null || ftfRG.getText().isEmpty()) {
+						lblRG.setForeground(Color.RED);
+					}
+					
+					if (ftfTelefone == null || ftfTelefone.getText().isEmpty()) {
+						lblTelefone.setForeground(Color.RED);
+					}
+					
+					if (passwordFieldSenha == null || passwordFieldSenha.getText().isEmpty()) {
+						lblSenha.setForeground(Color.RED);
+					}
+					
+					if (editorPaneEndereco == null || editorPaneEndereco.getText().isEmpty()) {
+						lblEndereco.setForeground(Color.RED);
+					}
 				}
 				
 			}

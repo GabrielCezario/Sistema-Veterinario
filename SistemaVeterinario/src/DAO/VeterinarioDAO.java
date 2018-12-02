@@ -35,6 +35,16 @@ public class VeterinarioDAO {
 				File flMarcacao = new File("DataBase\\VeterinarioDataBase\\" + veterinario.getLogin() + "\\Histórico Marcações");
 				flMarcacao.mkdir();
 				
+				File listaVeterinario = new File("DataBase\\AtendenteDataBase\\TodosOsVeterinariosDataBase");
+				
+				FileOutputStream fi2 = new FileOutputStream(listaVeterinario  + "\\" + veterinario.getLogin() + ".txt");
+				ObjectOutputStream os2 = new ObjectOutputStream(fi2);
+				
+				os2.writeObject(veterinario);
+
+				os.close();
+				fi.close();
+				
 			}
 			
 		} catch (Exception e) {

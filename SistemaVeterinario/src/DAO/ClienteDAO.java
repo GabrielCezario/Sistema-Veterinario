@@ -29,11 +29,21 @@ public class ClienteDAO {
 				os.close();
 				fi.close();
 				
-				File flMensagem = new File("DataBase\\AtendenteDataBase\\" + cliente.getLogin() + "\\Mensagem");
+				File flMensagem = new File("DataBase\\ClienteDataBase\\" + cliente.getLogin() + "\\Mensagem");
 				flMensagem.mkdir();
 				
-				File flMarcacao = new File("DataBase\\AtendenteDataBase\\" + cliente.getLogin() + "\\Histórico Marcações");
+				File flMarcacao = new File("DataBase\\ClienteDataBase\\" + cliente.getLogin() + "\\Histórico Marcações");
 				flMarcacao.mkdir();
+				
+				File listaCliente = new File("DataBase\\AtendenteDataBase\\TodosOsClientesDataBase");
+				
+				FileOutputStream fi2 = new FileOutputStream(listaCliente  + "\\" + cliente.getLogin() + ".txt");
+				ObjectOutputStream os2 = new ObjectOutputStream(fi2);
+				
+				os2.writeObject(cliente);
+
+				os.close();
+				fi.close();
 				
 			}
 			

@@ -34,7 +34,8 @@ public class AtendenteDAO {
 				fi.close();
 				
 				File flMensagem = new File("DataBase\\AtendenteDataBase\\" + atendente.getLogin() + "\\Mensagem");
-				flMensagem.mkdir();				
+				flMensagem.mkdir();		
+				
 			}
 			
 		} catch (IOException e) {

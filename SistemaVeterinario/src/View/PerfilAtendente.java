@@ -12,18 +12,26 @@ import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 import javax.swing.text.MaskFormatter;
 
+
 import Controller.ControladorCadastroAtendente;
 import Model.Atendente;
+import Model.Cliente;
+import Model.Veterinario;
 
 import javax.swing.JFormattedTextField;
 import javax.swing.JEditorPane;
 import javax.swing.JComboBox;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -36,6 +44,11 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JList;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import javax.swing.DefaultComboBoxModel;
 
 public class PerfilAtendente extends JPanel {
 	private JTextField txtNome;
@@ -44,9 +57,13 @@ public class PerfilAtendente extends JPanel {
 	private JTextField txtNomeUsuario;
 	private JTextField txtSenha;
 	private JTable tblVeterinario;
-	private JTable tblClientes;
-	private JTable table;
+	private JTable tblHistoricoAgendamentos;
 	private JTable tblConsultasCriadas;
+	private JTable tblClientes;
+	
+	public static String auxDados;
+	private JTextField txtBusca;
+	private JTextField txtBuscar;
 
 	public PerfilAtendente() throws ParseException, FileNotFoundException, IOException, ClassNotFoundException {
 		setLayout(null);
@@ -304,39 +321,128 @@ public class PerfilAtendente extends JPanel {
 		panelClientesCadastrados.setLayout(null);
 		tabbedPane.addTab("Clientes cadastrados", null, panelClientesCadastrados, null);
 		
-		JButton btnVisualizar = new JButton("Visualizar");
-		btnVisualizar.setBounds(530, 190, 95, 23);
-		panelClientesCadastrados.add(btnVisualizar);
-		
 		JScrollPane spClientes = new JScrollPane();
-		spClientes.setBounds(10, 11, 615, 167);
-		panelClientesCadastrados.add(spClientes);
+		spClientes.setBounds(10, 38, 615, 175);
+		panelClientesCadastrados.add(spClientes);		
 		
+		DefaultTableModel modelCliente = new DefaultTableModel();
+		tblClientes = new JTable();		
+		tblClientes.setModel(modelCliente);
 		
+		modelCliente.addColumn("Id");
+		modelCliente.addColumn("Nome");
+		modelCliente.addColumn("Telefone");
+		modelCliente.addColumn("Email");
 		
-		tblClientes = new JTable();
-		tblClientes.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		tblClientes.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"ID", "Nome Completo"
-			}
-		) {
-			boolean[] columnEditables = new boolean[] {
-				false, false
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
-		tblClientes.getColumnModel().getColumn(0).setResizable(false);
-		tblClientes.getColumnModel().getColumn(0).setPreferredWidth(50);
-		tblClientes.getColumnModel().getColumn(0).setMinWidth(50);
-		tblClientes.getColumnModel().getColumn(0).setMaxWidth(50);
 		tblClientes.getColumnModel().getColumn(1).setResizable(false);
+		tblClientes.getColumnModel().getColumn(0).setResizable(false);
+		tblClientes.getColumnModel().getColumn(0).setMinWidth(75);
+		tblClientes.getColumnModel().getColumn(0).setMaxWidth(75);
+		
+		File listaCliente = new File("DataBase\\AtendenteDataBase\\TodosOsClientesDataBase");
+		File[] lista = listaCliente.listFiles();
+		
+		for (File file : lista) {
+			
+			ObjectInputStream objCliente = new ObjectInputStream(new FileInputStream(file));
+			Cliente c = (Cliente) objCliente.readObject();		
+			
+			modelCliente.addRow(new Object[] {
+					
+					c.getIdCliente(),
+					c.getNome(),
+					c.getTelefone(),
+					c.getEmail()
+					
+			});
+			
+		}
 		
 		spClientes.setViewportView(tblClientes);
+		
+		JLabel lblBuscaPorCliente = new JLabel("Busca por cliente: ");
+		lblBuscaPorCliente.setFont(new Font("Arial", Font.PLAIN, 15));
+		lblBuscaPorCliente.setBounds(10, 13, 121, 14);
+		panelClientesCadastrados.add(lblBuscaPorCliente);
+		
+		txtBusca = new JTextField();
+		txtBusca.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				
+				String busca = txtBusca.getText();
+				
+				if (!(busca == null) || !busca.isEmpty()) {
+					
+					modelCliente.setRowCount(0);
+					
+					for (File file : lista) {
+						
+						try {
+							
+							ObjectInputStream objCliente = new ObjectInputStream(new FileInputStream(file));
+							Cliente c = (Cliente) objCliente.readObject();		
+							
+							if (busca.equalsIgnoreCase(c.getNome())) {
+								
+								modelCliente.addRow(new Object[] {
+										
+										c.getIdCliente(),
+										c.getNome(),
+										c.getTelefone(),
+										c.getEmail()
+										
+								});
+								
+							}
+
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (ClassNotFoundException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+					}
+					
+				} 
+				
+				if(busca == null || busca.isEmpty()){
+					
+					for (File file : lista) {
+						
+						try {
+							
+							ObjectInputStream objCliente = new ObjectInputStream(new FileInputStream(file));
+							Cliente c = (Cliente) objCliente.readObject();		
+								
+								modelCliente.addRow(new Object[] {
+										
+										c.getIdCliente(),
+										c.getNome(),
+										c.getTelefone(),
+										c.getEmail()
+										
+								});
+
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (ClassNotFoundException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+					}
+					
+				}
+				
+			}
+		});
+		txtBusca.setBounds(131, 11, 494, 20);
+		panelClientesCadastrados.add(txtBusca);
+		txtBusca.setColumns(10);
 		
 		JPanel panelAgendamentosConsultas = new JPanel();
 		tabbedPane.addTab("Criar marca\u00E7\u00F5es", null, panelAgendamentosConsultas, null);
@@ -351,6 +457,20 @@ public class PerfilAtendente extends JPanel {
 		JComboBox cbxVeterinario = new JComboBox();
 		cbxVeterinario.setBounds(92, 7, 168, 23);
 		panelAgendamentosConsultas.add(cbxVeterinario);
+		
+		File listaVeterinario = new File("DataBase\\AtendenteDataBase\\TodosOsVeterinariosDataBase");
+		File[] listVt = listaVeterinario.listFiles();
+		
+		cbxVeterinario.addItem(" -- Selecione o veterinário! --");
+		
+		for (File file : listVt) {
+			
+			ObjectInputStream objVeterinario = new ObjectInputStream(new FileInputStream(file));
+			Veterinario v = (Veterinario) objVeterinario.readObject();
+			
+			cbxVeterinario.addItem(v.getNome());
+			
+		}
 		
 		JLabel lblDia = new JLabel("Dia");
 		lblDia.setHorizontalAlignment(SwingConstants.LEFT);
@@ -380,42 +500,53 @@ public class PerfilAtendente extends JPanel {
 		MaskFormatter maskHorario = new MaskFormatter("##:##");
 		maskHorario.install(ftfHorario);
 		
-		JButton btnAgendar = new JButton("Criar");
-		btnAgendar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		
 		JButton btnDeletar = new JButton("Deletar");
 		btnDeletar.setBounds(517, 156, 108, 23);
 		panelAgendamentosConsultas.add(btnDeletar);
 		
 		JButton btnLimparCampos = new JButton("Limpar campos");
+		btnLimparCampos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				cbxVeterinario.setSelectedIndex(0);
+				ftfDia.setText("");
+				ftfHorario.setText("");
+				
+			}
+		});
 		btnLimparCampos.setBounds(517, 122, 108, 23);
 		panelAgendamentosConsultas.add(btnLimparCampos);
-		btnAgendar.setBounds(517, 190, 108, 23);
-		panelAgendamentosConsultas.add(btnAgendar);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(10, 98, 498, 115);
 		panelAgendamentosConsultas.add(scrollPane_1);
 		
+		DefaultTableModel modelConsultasCriadas = new DefaultTableModel();
 		tblConsultasCriadas = new JTable();
-		tblConsultasCriadas.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		tblConsultasCriadas.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Veterin\u00E1rio", "Dia / M\u00EAs", "Hor\u00E1rio"
-			}
-		) {
-			boolean[] columnEditables = new boolean[] {
-				false, false, false
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
+		tblConsultasCriadas.setModel(modelConsultasCriadas);
+		
+		modelConsultasCriadas.addColumn("Veterinário");
+		modelConsultasCriadas.addColumn("Dia / Mês");
+		modelConsultasCriadas.addColumn("Horário");
+		
+		File consultas = new File("DataBase\\AtendenteDataBase\\Consultas");
+		File[] consul = consultas.listFiles();
+		
+		for (File file : consul) {
+			
+			ObjectInputStream ob = new ObjectInputStream(new FileInputStream(file));
+			ArrayList vt = (ArrayList) ob.readObject();
+			
+			modelConsultasCriadas.addRow(new Object[] {
+					
+					vt.get(0),
+					vt.get(1),
+					vt.get(2)
+					
+			});
+			
+		}
+		
 		tblConsultasCriadas.getColumnModel().getColumn(0).setResizable(false);
 		tblConsultasCriadas.getColumnModel().getColumn(1).setResizable(false);
 		tblConsultasCriadas.getColumnModel().getColumn(1).setMinWidth(75);
@@ -431,30 +562,70 @@ public class PerfilAtendente extends JPanel {
 		lblConsultasMarcadas.setBounds(10, 73, 108, 14);
 		panelAgendamentosConsultas.add(lblConsultasMarcadas);
 		
+		JButton btnAgendar = new JButton("Criar");
+		btnAgendar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				if (cbxVeterinario.getSelectedIndex() != 0) {
+					
+					List<Object> lista = new ArrayList<Object>();
+					
+					lista.add(cbxVeterinario.getSelectedItem());
+					lista.add(ftfDia.getText());
+					lista.add(ftfHorario.getText());
+					
+					try {
+						
+						ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("DataBase\\AtendenteDataBase\\Consultas\\" + cbxVeterinario.getSelectedItem() + "Consulta.txt"));
+						os.writeObject(lista);
+						
+						os.close();
+						
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					
+					
+				}
+				
+			}
+		});
+		btnAgendar.setBounds(517, 190, 108, 23);
+		panelAgendamentosConsultas.add(btnAgendar);
+		
 		JPanel panelVeterinariosCadastrados = new JPanel();
 		panelVeterinariosCadastrados.setLayout(null);
 		tabbedPane.addTab("Veterin\u00E1rio Cadastrados", null, panelVeterinariosCadastrados, null);
 		
 		JScrollPane spVeterinario = new JScrollPane();
-		spVeterinario.setBounds(10, 11, 615, 168);
+		spVeterinario.setBounds(10, 43, 615, 170);
 		panelVeterinariosCadastrados.add(spVeterinario);
 		
+		DefaultTableModel modelVeterinario = new DefaultTableModel();
 		tblVeterinario = new JTable();
-		tblVeterinario.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		tblVeterinario.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"ID", "Nome Completo"
-			}
-		) {
-			boolean[] columnEditables = new boolean[] {
-				false, false
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
+		tblVeterinario.setModel(modelVeterinario);
+
+		modelVeterinario.addColumn("Id");
+		modelVeterinario.addColumn("Nome");
+		modelVeterinario.addColumn("Telefone");
+		modelVeterinario.addColumn("Email");
+		
+		for (File file : listVt) {
+			
+			ObjectInputStream objVeterinario = new ObjectInputStream(new FileInputStream(file));
+			Veterinario v = (Veterinario) objVeterinario.readObject();
+			
+			modelVeterinario.addRow(new Object[] {
+					
+					v.getIdMedico(),
+					v.getNome(),
+					v.getTelefone(),
+					v.getEmail()
+					
+			});
+			
+		}
+		
 		tblVeterinario.getColumnModel().getColumn(0).setResizable(false);
 		tblVeterinario.getColumnModel().getColumn(0).setPreferredWidth(50);
 		tblVeterinario.getColumnModel().getColumn(0).setMinWidth(50);
@@ -462,9 +633,6 @@ public class PerfilAtendente extends JPanel {
 		tblVeterinario.getColumnModel().getColumn(1).setResizable(false);
 		spVeterinario.setViewportView(tblVeterinario);
 		
-		JButton button = new JButton("Visualizar");
-		button.setBounds(365, 190, 95, 23);
-		panelVeterinariosCadastrados.add(button);
 		
 		JButton btnCadastrarVeterinarios = new JButton("Cadastrar Veterinarios");
 		btnCadastrarVeterinarios.addActionListener(new ActionListener() {
@@ -481,8 +649,85 @@ public class PerfilAtendente extends JPanel {
 		});
 		btnCadastrarVeterinarios.setBackground(Color.WHITE);
 		btnCadastrarVeterinarios.setForeground(Color.BLACK);
-		btnCadastrarVeterinarios.setBounds(470, 190, 155, 23);
+		btnCadastrarVeterinarios.setBounds(484, 11, 141, 23);
 		panelVeterinariosCadastrados.add(btnCadastrarVeterinarios);
+		
+		JLabel lblBuscar = new JLabel("Busca por veterin\u00E1rio: ");
+		lblBuscar.setFont(new Font("Arial", Font.PLAIN, 15));
+		lblBuscar.setBounds(10, 14, 152, 14);
+		panelVeterinariosCadastrados.add(lblBuscar);
+		
+		txtBuscar = new JTextField();
+		txtBuscar.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				
+				String busca = txtBuscar.getText();
+				
+				if (!(busca == null) || !busca.isEmpty()) {
+					modelVeterinario.setRowCount(0);
+					
+					for (File file : listVt) {
+						
+						try {
+							
+							ObjectInputStream objVeterinario = new ObjectInputStream(new FileInputStream(file));
+							Veterinario v = (Veterinario) objVeterinario.readObject();		
+							
+							if (busca.equalsIgnoreCase(v.getNome())) {
+								modelVeterinario.addRow(new Object[] {
+										
+										v.getIdMedico(),
+										v.getNome(),
+										v.getTelefone(),
+										v.getEmail()
+										
+								});
+								
+							}
+
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (ClassNotFoundException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+					}
+					
+				}
+				
+				if (busca == null || busca.isEmpty()) {
+					for (File file : listVt) {
+	
+						try {
+							
+							ObjectInputStream objVeterinario = new ObjectInputStream(new FileInputStream(file));
+							Veterinario v = (Veterinario) objVeterinario.readObject();
+							
+							modelVeterinario.addRow(new Object[] {
+									
+									v.getIdMedico(),
+									v.getNome(),
+									v.getTelefone(),
+									v.getEmail()
+									
+							});
+							
+						} catch (IOException | ClassNotFoundException e) {
+							e.printStackTrace();
+						}
+						
+					}
+					
+				}
+				
+			}
+		});
+		txtBuscar.setColumns(10);
+		txtBuscar.setBounds(157, 12, 317, 20);
+		panelVeterinariosCadastrados.add(txtBuscar);
 		
 		JPanel panelHistorico = new JPanel();
 		tabbedPane.addTab("Hist\u00F3rico de Agendamentos", null, panelHistorico, null);
@@ -492,31 +737,43 @@ public class PerfilAtendente extends JPanel {
 		scrollPane.setBounds(10, 11, 615, 202);
 		panelHistorico.add(scrollPane);
 		
-		table = new JTable();
-		table.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Cliente", "Veterin\u00E1rio", "Dia / M\u00EAs", "Hora"
-			}
-		) {
-			boolean[] columnEditables = new boolean[] {
-				false, false, false, false
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
-		table.getColumnModel().getColumn(0).setResizable(false);
-		table.getColumnModel().getColumn(1).setResizable(false);
-		table.getColumnModel().getColumn(2).setResizable(false);
-		table.getColumnModel().getColumn(2).setMinWidth(75);
-		table.getColumnModel().getColumn(2).setMaxWidth(75);
-		table.getColumnModel().getColumn(3).setResizable(false);
-		table.getColumnModel().getColumn(3).setMinWidth(75);
-		table.getColumnModel().getColumn(3).setMaxWidth(75);
-		scrollPane.setViewportView(table);
+		DefaultTableModel modelHistoricoAgendamento = new DefaultTableModel();
+		tblHistoricoAgendamentos = new JTable();
+		tblHistoricoAgendamentos.setModel(modelHistoricoAgendamento);
+		
+		modelHistoricoAgendamento.addColumn("Cliente");
+		modelHistoricoAgendamento.addColumn("Veterinario");
+		modelHistoricoAgendamento.addColumn("Dia / Mês");
+		modelHistoricoAgendamento.addColumn("Horário");
+		
+		File a = new File("DataBase\\AtendenteDataBase\\Agendamentos\\");
+		File[] b = a.listFiles();
+		
+		for (File fl : b) {
+			
+			ObjectInputStream ob = new ObjectInputStream(new FileInputStream(fl));
+			ArrayList vt = (ArrayList) ob.readObject();
+			
+			modelHistoricoAgendamento.addRow(new Object[] {
+					
+					vt.get(0),
+					vt.get(1),
+					vt.get(2),
+					vt.get(3),
+					
+			});
+			
+		}
+		
+		tblHistoricoAgendamentos.getColumnModel().getColumn(0).setResizable(false);
+		tblHistoricoAgendamentos.getColumnModel().getColumn(1).setResizable(false);
+		tblHistoricoAgendamentos.getColumnModel().getColumn(2).setResizable(false);
+		tblHistoricoAgendamentos.getColumnModel().getColumn(2).setMinWidth(75);
+		tblHistoricoAgendamentos.getColumnModel().getColumn(2).setMaxWidth(75);
+		tblHistoricoAgendamentos.getColumnModel().getColumn(3).setResizable(false);
+		tblHistoricoAgendamentos.getColumnModel().getColumn(3).setMinWidth(75);
+		tblHistoricoAgendamentos.getColumnModel().getColumn(3).setMaxWidth(75);
+		scrollPane.setViewportView(tblHistoricoAgendamentos);
 		
 		JPanel panelMensagens = new JPanel();
 		tabbedPane.addTab("Caixa de Mensagens", null, panelMensagens, null);

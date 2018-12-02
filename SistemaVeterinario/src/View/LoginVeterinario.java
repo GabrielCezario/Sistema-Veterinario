@@ -108,7 +108,7 @@ public class LoginVeterinario extends JPanel {
 		add(btnEntrar);
 		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Gabriel\\git\\Sistema-Veterinario\\SistemaVeterinario\\Imagens\\ImagemLogin.png"));
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Gabriel\\git\\Sistema-Veterinario\\SistemaVeterinario\\Imagens\\imgVet.png"));
 		lblNewLabel.setBounds(256, 78, 150, 150);
 		add(lblNewLabel);
 

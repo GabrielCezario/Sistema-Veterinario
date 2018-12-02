@@ -8,6 +8,7 @@ import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
 
 public class Inicio extends JPanel {
 
@@ -32,7 +33,7 @@ public class Inicio extends JPanel {
 				
 			}
 		});
-		btnCliente.setBounds(73, 339, 89, 23);
+		btnCliente.setBounds(73, 373, 89, 23);
 		add(btnCliente);
 		
 		JButton btnAtendente = new JButton("Atendente");
@@ -44,7 +45,7 @@ public class Inicio extends JPanel {
 				
 			}
 		});
-		btnAtendente.setBounds(290, 339, 89, 23);
+		btnAtendente.setBounds(290, 373, 89, 23);
 		add(btnAtendente);
 		
 		JButton btnVeterinrio = new JButton("Veterin\u00E1rio");
@@ -55,8 +56,13 @@ public class Inicio extends JPanel {
 				Main.getFrame().getContentPane().revalidate();
 			}
 		});
-		btnVeterinrio.setBounds(477, 339, 103, 23);
+		btnVeterinrio.setBounds(477, 373, 103, 23);
 		add(btnVeterinrio);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Gabriel\\git\\Sistema-Veterinario\\SistemaVeterinario\\Imagens\\imgAnimais.png"));
+		lblNewLabel.setBounds(10, 107, 620, 174);
+		add(lblNewLabel);
 
 	}
 }

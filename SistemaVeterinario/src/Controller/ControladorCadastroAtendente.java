@@ -32,7 +32,7 @@ public class ControladorCadastroAtendente {
 
 	}
 	
-	public void logar(String login, String senha) throws LoginInvalidoException, FileNotFoundException, ClassNotFoundException, IOException {
+	public void logar(String login, String senha) throws LoginInvalidoException, FileNotFoundException, ClassNotFoundException, IOException, ClienteInvalidoException {
 		
 		LoginInvalidoException loginInvalidoException = verificarSenha(login, senha);
 		
@@ -54,15 +54,15 @@ public class ControladorCadastroAtendente {
 	
 	public void apagarAtendente(Atendente atendente) throws FileNotFoundException, IOException{ 
 		
-		AtendenteDAO.deletarAtendente(atendente);
-		
 		Main.getFrame().setContentPane(new LoginAtendente());
 		Main.getFrame().getContentPane().revalidate();
+		
+		AtendenteDAO.deletarAtendente(atendente);
 	}
 
-	// ======================================================== ( METODOS PRIVADOS ) ======================================================
+	// ======================================================== ( METODOS PRIVADOS ) ===========================================================
 
-	// =================================================== ( METODO PARA VERIFICAR A SENHA ) ==============================================
+	// =================================================== ( METODO PARA VERIFICAR A SENHA ) ===================================================
 	
 	private LoginInvalidoException verificarSenha(String login, String senha) throws FileNotFoundException, IOException, ClassNotFoundException {
 

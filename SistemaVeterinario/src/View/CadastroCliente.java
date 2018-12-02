@@ -264,12 +264,52 @@ public class CadastroCliente extends JPanel {
 					//Editor Pane
 					editorPaneEndereco.setText("");
 					
-				} catch (ClienteInvalidoException e1) {
-					e1.printStackTrace();
+				} catch (ClienteInvalidoException e1) {		
 					
 					JDialogUsuarioNaoCriado jDialogUsuarioNaoCriado = new JDialogUsuarioNaoCriado();
 					jDialogUsuarioNaoCriado.setVisible(true);
 					jDialogUsuarioNaoCriado.setLocationRelativeTo(null);
+					
+					if (txtNome == null || txtNome.getText().isEmpty()) {
+						lblNome.setForeground(Color.RED);
+					}
+					
+					if (txtEmail == null || txtEmail.getText().isEmpty()) {
+						lblEmail.setForeground(Color.RED);
+					}
+					
+					if (txtNomeUsuario == null || txtNomeUsuario.getText().isEmpty()) {
+						lblLogin.setForeground(Color.RED);
+					}
+					
+					if (txtSexo == null || txtSexo.getText().isEmpty()) {
+						lblSexo.setForeground(Color.RED);
+					}
+					
+					if (formattedCPF == null || formattedCPF.getText().isEmpty()) {
+						lblCpf.setForeground(Color.RED);
+					}
+					
+					if (ftfDtNascimento == null || ftfDtNascimento.getText().isEmpty()) {
+						lblDataDeNascimento.setForeground(Color.RED);
+					}
+					
+					if (formattedRG == null || formattedRG.getText().isEmpty()) {
+						lblRg.setForeground(Color.RED);
+					}
+					
+					if (formattedTelefone == null || formattedTelefone.getText().isEmpty()) {
+						lblTelefone.setForeground(Color.RED);
+					}
+					
+					if (passwordField == null || passwordField.getText().isEmpty()) {
+						lblSenha.setForeground(Color.RED);
+					}
+					
+					if (editorPaneEndereco == null || editorPaneEndereco.getText().isEmpty()) {
+						lblEndereo.setForeground(Color.RED);
+					}
+					
 				}
 				
 				

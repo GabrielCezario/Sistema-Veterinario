@@ -64,7 +64,7 @@ public class ControladorCadastroCliente {
 	private LoginInvalidoException verificarSenha(String login, String senha) throws FileNotFoundException, IOException, ClassNotFoundException {
 		
 		LoginInvalidoException loginInvalidoException = null;
-		File file = new File("DataBase\\ClienteDataBase" + login);
+		File file = new File("DataBase\\ClienteDataBase\\" + login);
 		
 		if (!file.exists()) {
 			

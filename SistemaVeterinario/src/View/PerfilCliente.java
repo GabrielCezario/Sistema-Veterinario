@@ -19,11 +19,16 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JEditorPane;
 import javax.swing.JComboBox;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -40,7 +45,12 @@ public class PerfilCliente extends JPanel {
 	private JTextField txtNomeUsuario;
 	private JTextField txtSenha;
 	private JTable tblHistorico;
-
+	
+	public static String auxDados;
+	private JTable tblAgendamentoConsultas;
+	
+	private String auxHistorico1;
+	private String auxHistorico2;
 
 	public PerfilCliente() throws ParseException, FileNotFoundException, IOException, ClassNotFoundException {
 		setLayout(null);
@@ -280,35 +290,9 @@ public class PerfilCliente extends JPanel {
 		btnEcluirConta.setBounds(535, 122, 95, 23);
 		panelDados.add(btnEcluirConta);
 		
-		JPanel panelPlanos = new JPanel();
-		panelPlanos.setLayout(null);
-		tabbedPane.addTab("Planos", null, panelPlanos, null);
-		
-		JButton btnAdicionarPlano = new JButton("Adicionar plano");
-		btnAdicionarPlano.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		btnAdicionarPlano.setBounds(520, 190, 105, 23);
-		panelPlanos.add(btnAdicionarPlano);
-		
-		JButton btnExcluirPlano = new JButton("Excluir plano");
-		btnExcluirPlano.setBounds(520, 156, 105, 23);
-		panelPlanos.add(btnExcluirPlano);
-		
-		JButton btnPagarPlano = new JButton("Pagamento");
-		btnPagarPlano.setBounds(520, 11, 105, 23);
-		panelPlanos.add(btnPagarPlano);
-		
 		JPanel panelAgendamentosConsultas = new JPanel();
 		tabbedPane.addTab("Agendamentos de Consultas", null, panelAgendamentosConsultas, null);
 		panelAgendamentosConsultas.setLayout(null);
-		
-		JLabel lblVeterinrio = new JLabel("Veterin\u00E1rio");
-		lblVeterinrio.setHorizontalAlignment(SwingConstants.LEFT);
-		lblVeterinrio.setFont(new Font("Arial", Font.PLAIN, 13));
-		lblVeterinrio.setBounds(10, 10, 72, 14);
-		panelAgendamentosConsultas.add(lblVeterinrio);
 		
 		JLabel lblDescrioDoProblema = new JLabel("Descri\u00E7\u00E3o do problema (Opcional)");
 		lblDescrioDoProblema.setHorizontalAlignment(SwingConstants.LEFT);
@@ -316,37 +300,88 @@ public class PerfilCliente extends JPanel {
 		lblDescrioDoProblema.setBounds(10, 115, 204, 14);
 		panelAgendamentosConsultas.add(lblDescrioDoProblema);
 		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(10, 11, 615, 93);
+		panelAgendamentosConsultas.add(scrollPane_1);
+		
+		DefaultTableModel modelConsultasCriadas = new DefaultTableModel();
+		tblAgendamentoConsultas = new JTable();
+		tblAgendamentoConsultas.setModel(modelConsultasCriadas);
+		
+		modelConsultasCriadas.addColumn("Veterinário");
+		modelConsultasCriadas.addColumn("Dia / Mês");
+		modelConsultasCriadas.addColumn("Horário");
+		
+		File consultas = new File("DataBase\\AtendenteDataBase\\Consultas");
+		File[] consul = consultas.listFiles();
+		
+		for (File file : consul) {
+			
+			ObjectInputStream ob = new ObjectInputStream(new FileInputStream(file));
+			ArrayList vt = (ArrayList) ob.readObject();
+			
+			modelConsultasCriadas.addRow(new Object[] {
+					
+					vt.get(0),
+					vt.get(1),
+					vt.get(2)
+					
+			});
+			
+		}
+		
+		tblAgendamentoConsultas.getColumnModel().getColumn(0).setResizable(false);
+		tblAgendamentoConsultas.getColumnModel().getColumn(1).setResizable(false);
+		tblAgendamentoConsultas.getColumnModel().getColumn(1).setMinWidth(75);
+		tblAgendamentoConsultas.getColumnModel().getColumn(1).setMaxWidth(75);
+		tblAgendamentoConsultas.getColumnModel().getColumn(2).setResizable(false);
+		tblAgendamentoConsultas.getColumnModel().getColumn(2).setMinWidth(75);
+		tblAgendamentoConsultas.getColumnModel().getColumn(2).setMaxWidth(75);
+		
+		scrollPane_1.setViewportView(tblAgendamentoConsultas);
+		
+		JButton btnAgendar = new JButton("Agendar");
+		btnAgendar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				int i = tblAgendamentoConsultas.getSelectedRow();
+				
+				String nome = (String) tblAgendamentoConsultas.getValueAt(i, 0);
+				String dia = (String) tblAgendamentoConsultas.getValueAt(i, 1);
+				String horario = (String) tblAgendamentoConsultas.getValueAt(i, 2);
+				
+				List<String> ac = new ArrayList<String>();
+				ac.add(cliente.getNome());
+				ac.add(nome);
+				ac.add(dia);
+				ac.add(horario);
+				
+				try {
+					
+					ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("DataBase\\ClienteDataBase\\"+ cliente.getLogin() + "\\Histórico Marcações\\" + ac.get(1) + ".txt"));
+					ObjectOutputStream os2 = new ObjectOutputStream(new FileOutputStream("DataBase\\AtendenteDataBase\\Agendamentos\\" + cliente.getNome() + ac.get(1) + ".txt"));
+					os.writeObject(ac);
+					os2.writeObject(ac);
+					
+					os.close();
+					os2.close();
+					
+					auxHistorico1 = ac.get(0);
+					
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				
+			}
+		});
+		
 		JEditorPane editorPaneProblema = new JEditorPane();
 		editorPaneProblema.setBounds(10, 140, 505, 73);
 		panelAgendamentosConsultas.add(editorPaneProblema);
-		
-		JButton btnAgendar = new JButton("Agendar");
 		btnAgendar.setBounds(530, 190, 95, 23);
 		panelAgendamentosConsultas.add(btnAgendar);
-		
-		JComboBox cbxVeterinario = new JComboBox();
-		cbxVeterinario.setBounds(92, 8, 168, 23);
-		panelAgendamentosConsultas.add(cbxVeterinario);
-		
-		JLabel lblDia = new JLabel("Dia");
-		lblDia.setHorizontalAlignment(SwingConstants.LEFT);
-		lblDia.setFont(new Font("Arial", Font.PLAIN, 13));
-		lblDia.setBounds(270, 11, 29, 14);
-		panelAgendamentosConsultas.add(lblDia);
-		
-		JComboBox cbxDia = new JComboBox();
-		cbxDia.setBounds(297, 8, 108, 23);
-		panelAgendamentosConsultas.add(cbxDia);
-		
-		JLabel lblHorrio = new JLabel("Hor\u00E1rio");
-		lblHorrio.setHorizontalAlignment(SwingConstants.LEFT);
-		lblHorrio.setFont(new Font("Arial", Font.PLAIN, 13));
-		lblHorrio.setBounds(415, 12, 46, 14);
-		panelAgendamentosConsultas.add(lblHorrio);
-		
-		JComboBox cbxHorario = new JComboBox();
-		cbxHorario.setBounds(471, 8, 108, 23);
-		panelAgendamentosConsultas.add(cbxHorario);
 		
 		JPanel panelHistorico = new JPanel();
 		tabbedPane.addTab("Hist\u00F3rico de Agendamentos", null, panelHistorico, null);
@@ -355,24 +390,33 @@ public class PerfilCliente extends JPanel {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 11, 615, 202);
 		panelHistorico.add(scrollPane);
-		
+	
+		DefaultTableModel modelHistorico = new DefaultTableModel();
 		tblHistorico = new JTable();
-		tblHistorico.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		tblHistorico.setModel(new DefaultTableModel(
-			new Object[][] {
-				
-			},
-			new String[] {
-				"M\u00E9dico", "Dia / M\u00EAs", "Hor\u00E1rio"
-			}
-		) {
-			boolean[] columnEditables = new boolean[] {
-				false, false, false
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
+		tblHistorico.setModel(modelHistorico);
+		
+		modelHistorico.addColumn("Veterinário");
+		modelHistorico.addColumn("Dia / Mês");
+		modelHistorico.addColumn("Horário");
+		
+		File a = new File("DataBase\\ClienteDataBase\\"+ cliente.getLogin() + "\\Histórico Marcações\\");
+		File[] b = a.listFiles();
+		
+		for (File fl : b) {
+			
+			ObjectInputStream ob = new ObjectInputStream(new FileInputStream(fl));
+			ArrayList vt = (ArrayList) ob.readObject();
+			
+			modelHistorico.addRow(new Object[] {
+					
+					vt.get(1),
+					vt.get(2),
+					vt.get(3),
+					
+			});
+			
+		}
+
 		tblHistorico.getColumnModel().getColumn(0).setResizable(false);
 		tblHistorico.getColumnModel().getColumn(1).setResizable(false);
 		tblHistorico.getColumnModel().getColumn(1).setMinWidth(75);

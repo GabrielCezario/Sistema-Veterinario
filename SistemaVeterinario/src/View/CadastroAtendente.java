@@ -229,7 +229,7 @@ public class CadastroAtendente extends JPanel{
 				atendente.setSenha(senha);
 				atendente.setEndereco(editorPaneEndereco.getText());
 				
-				try {
+				try {					
 					
 					ControladorCadastroAtendente controladorCadastroAtendente = new ControladorCadastroAtendente();
 					controladorCadastroAtendente.cadastrarAtendente(atendente);
@@ -257,11 +257,51 @@ public class CadastroAtendente extends JPanel{
 					editorPaneEndereco.setText("");
 					
 				} catch (AtendenteInvalidoException e) {
-					e.printStackTrace();
 					
 					JDialogUsuarioNaoCriado jDialogUsuarioNaoCriado = new JDialogUsuarioNaoCriado();
 					jDialogUsuarioNaoCriado.setVisible(true);
 					jDialogUsuarioNaoCriado.setLocationRelativeTo(null);
+					
+					if (txtNome == null || txtNome.getText().isEmpty()) {
+						lblNomeCompleto.setForeground(Color.RED);
+					}
+					
+					if (txtEmail == null || txtEmail.getText().isEmpty()) {
+						lblEmail.setForeground(Color.RED);
+					}
+					
+					if (txtNomeUsuario == null || txtNomeUsuario.getText().isEmpty()) {
+						lblNomeUsuario.setForeground(Color.RED);
+					}
+					
+					if (txtSexo == null || txtSexo.getText().isEmpty()) {
+						lblSexo.setForeground(Color.RED);
+					}
+					
+					if (ftfCPF == null || ftfCPF.getText().isEmpty()) {
+						lblCPF.setForeground(Color.RED);
+					}					
+					
+					if (ftfDtNascimento == null || ftfDtNascimento.getText().isEmpty()) {
+						lblDtNascimento.setForeground(Color.RED);
+					}
+					
+					if (ftfRG == null || ftfRG.getText().isEmpty()) {
+						lblRG.setForeground(Color.RED);
+					}
+					
+					if (ftfTelefone == null || ftfTelefone.getText().isEmpty()) {
+						lblTelefone.setForeground(Color.RED);
+					}
+					
+					if (passwordFieldSenha == null || passwordFieldSenha.getText().isEmpty()) {
+						lblSenha.setForeground(Color.RED);
+					}
+					
+					if (editorPaneEndereco == null || editorPaneEndereco.getText().isEmpty()) {
+						lblEndereco.setForeground(Color.RED);
+					}
+					
 				}
 				
 				

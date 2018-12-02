@@ -5,6 +5,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import Controller.ClienteInvalidoException;
 import Controller.ControladorCadastroAtendente;
 import Controller.LoginInvalidoException;
 import Model.Atendente;
@@ -105,6 +106,9 @@ public class LoginAtendente extends JPanel {
 					e2.printStackTrace();
 					
 					panelErroLogin.setVisible(true);
+				} catch (ClienteInvalidoException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 		
 			}
@@ -129,7 +133,7 @@ public class LoginAtendente extends JPanel {
 		add(btnCadastrarse);
 		
 		JLabel lblImagemLogin = new JLabel();
-		lblImagemLogin.setIcon(new ImageIcon("C:\\Users\\Gabriel\\git\\Sistema-Veterinario\\SistemaVeterinario\\Imagens\\ImagemLogin.png"));
+		lblImagemLogin.setIcon(new ImageIcon("C:\\Users\\Gabriel\\git\\Sistema-Veterinario\\SistemaVeterinario\\Imagens\\imgADM.png"));
 		lblImagemLogin.setBounds(246, 78, 150, 150);
 		add(lblImagemLogin);
 
