@@ -2,7 +2,7 @@ package Model;
 
 import java.io.Serializable;
 
-public class Atendente implements Serializable{
+public class Atendente extends Pessoa implements Serializable{
 	
 	private static int idAtendente;
 	private String nome;
@@ -23,6 +23,7 @@ public class Atendente implements Serializable{
 	}
 	
 	public Atendente(String nome, String dtNascimento, String telefone, String endereco, String sexo, String email, String login, String senha, String rg, String cpf) {
+		super(nome, dtNascimento, telefone, endereco, sexo, email, login, senha, rg, cpf);
 		
 		idAtendente++;
 		
@@ -43,82 +44,102 @@ public class Atendente implements Serializable{
 		return idAtendente;
 	}
 
+	@Override
 	public String getNome() {
 		return nome;
 	}
 
+	@Override
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
+	@Override
 	public String getDtNascimento() {
 		return dtNascimento;
 	}
 
+	@Override
 	public void setDtNascimento(String dtNascimento) {
 		this.dtNascimento = dtNascimento;
 	}
 
+	@Override
 	public String getTelefone() {
 		return telefone;
 	}
 
+	@Override
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
 
+	@Override
 	public String getEndereco() {
 		return endereco;
 	}
 
+	@Override
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}
 
+	@Override
 	public String getSexo() {
 		return sexo;
 	}
 
+	@Override
 	public void setSexo(String sexo) {
 		this.sexo = sexo;
 	}
 
+	@Override
 	public String getEmail() {
 		return email;
 	}
 
+	@Override
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
+	@Override
 	public String getLogin() {
 		return login;
 	}
 
+	@Override
 	public void setLogin(String login) {
 		this.login = login;
 	}
 
+	@Override
 	public String getSenha() {
 		return senha;
 	}
 
+	@Override
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
 
+	@Override
 	public String getRg() {
 		return rg;
 	}
 
+	@Override
 	public void setRg(String rg) {
 		this.rg = rg;
 	}
 
+	@Override
 	public String getCpf() {
 		return cpf;
 	}
 
+	@Override
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}

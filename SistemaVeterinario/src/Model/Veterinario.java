@@ -2,7 +2,7 @@ package Model;
 
 import java.io.Serializable;
 
-public class Veterinario implements Serializable{
+public class Veterinario extends Pessoa implements Serializable{
 	
 	private static int idMedico;
 	private String nome;
@@ -24,6 +24,7 @@ public class Veterinario implements Serializable{
 	}
 	
 	public Veterinario(String nome, String dtNascimento, String telefone, String endereco, String sexo, String email, String login, String senha, String especialidade, String rg, String cpf) {
+		super(nome, dtNascimento, telefone, endereco, sexo, email, login, senha, rg, cpf);
 		
 		idMedico++;
 		
@@ -32,6 +33,9 @@ public class Veterinario implements Serializable{
 		this.telefone = telefone;
 		this.endereco = endereco;
 		this.sexo = sexo;
+		this.email = email;
+		this.login = login;
+		this.senha = senha;
 		this.especialidade = especialidade;
 		this.rg = rg;
 		this.cpf = cpf;
@@ -42,92 +46,112 @@ public class Veterinario implements Serializable{
 		return idMedico;
 	}
 
+	@Override
 	public String getNome() {
 		return nome;
 	}
 
+	@Override
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
+	@Override
 	public String getDtNascimento() {
 		return dtNascimento;
 	}
 
+	@Override
 	public void setDtNascimento(String dtNascimento) {
 		this.dtNascimento = dtNascimento;
 	}
 
+	@Override
 	public String getTelefone() {
 		return telefone;
 	}
 
+	@Override
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
 
+	@Override
 	public String getEndereco() {
 		return endereco;
 	}
 
+	@Override
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}
 
+	@Override
 	public String getSexo() {
 		return sexo;
 	}
 
+	@Override
 	public void setSexo(String sexo) {
 		this.sexo = sexo;
 	}
 
+	@Override
 	public String getEmail() {
 		return email;
 	}
 
+	@Override
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
+	@Override
 	public String getLogin() {
 		return login;
 	}
 
+	@Override
 	public void setLogin(String login) {
 		this.login = login;
 	}
 
+	@Override
 	public String getSenha() {
 		return senha;
 	}
 
+	@Override
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
 
+	@Override
+	public String getRg() {
+		return rg;
+	}
+
+	@Override
+	public void setRg(String rg) {
+		this.rg = rg;
+	}
+
+	@Override
+	public String getCpf() {
+		return cpf;
+	}
+
+	@Override
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+	
 	public String getEspecialidade() {
 		return especialidade;
 	}
 
 	public void setEspecialidade(String especialidade) {
 		this.especialidade = especialidade;
-	}
-
-	public String getRg() {
-		return rg;
-	}
-
-	public void setRg(String rg) {
-		this.rg = rg;
-	}
-
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
 	}
 
 }
